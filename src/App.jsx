@@ -284,8 +284,12 @@ export default function StrokeWise() {
             </button>
           ))}
         </div>
-        <div style={{fontSize:11,color:"#9aabb8",marginTop:24}}>You can change this in settings anytime</div>
-        <div style={{marginTop:24,background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:14,padding:"12px 16px",fontSize:12,color:"#b91c1c",lineHeight:1.6}}>
+        <div style={{display:"flex",justifyContent:"center",gap:8,marginTop:20,flexWrap:"wrap"}}>
+          {["🚫 No ads ever","🚫 No pop-ups","✓ No credit card needed","✓ Cancel anytime"].map(b=>(
+            <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
+          ))}
+        </div>
+        <div style={{marginTop:16,background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:14,padding:"12px 16px",fontSize:12,color:"#b91c1c",lineHeight:1.6}}>
           ⚕️ StrokeWise is for education and support only. Always follow your medical team's advice.
         </div>
       </div>
@@ -508,6 +512,28 @@ export default function StrokeWise() {
         {/* ══ HOME ══ */}
         {screen==="home"&&(
           <div style={{opacity:fadeIn?1:0,transition:"opacity 0.6s"}}>
+
+            {/* Profile switcher */}
+            <div style={{...card({marginBottom:14,padding:"12px 14px"})}}>
+              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>I AM A…</div>
+              <div style={{display:"flex",gap:8}}>
+                {[{t:"Stroke Survivor",e:"🧠",v:"survivor"},{t:"Caregiver / Family",e:"❤️",v:"caregiver"}].map(u=>(
+                  <button key={u.v} onClick={()=>setUserType(u.v)}
+                    style={{flex:1,background:userType===u.v?`${TEAL}15`:"rgba(255,255,255,0.5)",border:`2px solid ${userType===u.v?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:14,padding:"10px 8px",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                    <div style={{fontSize:20,marginBottom:4}}>{u.e}</div>
+                    <div style={{fontSize:11,fontWeight:700,color:userType===u.v?TEAL:NAVY,lineHeight:1.3}}>{u.t}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Trust badges */}
+            <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+              {["🚫 No ads","🚫 No pop-ups","✓ No credit card needed"].map(b=>(
+                <div key={b} style={{background:`${TEAL}10`,border:`1px solid ${TEAL}25`,borderRadius:20,padding:"3px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
+              ))}
+            </div>
+
             <div style={{...card({background:`linear-gradient(135deg,${NAVY},${TEAL})`,color:"#fff",marginBottom:14,padding:"20px"})}}>
               <div style={{fontSize:9,letterSpacing:2.5,opacity:0.7,marginBottom:8}}>TODAY'S REMINDER</div>
               <div style={{fontSize:15,lineHeight:1.65,fontStyle:"italic"}}>"{AFFIRMATIONS_STROKE[affIdx]}"</div>
