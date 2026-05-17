@@ -114,6 +114,7 @@ export default function StrokeWise() {
   const [screen,      setScreen]     = useState("home");
   const [premium,     setPremium]    = useState(false);
   const [modal,       setModal]      = useState(false);
+  const [selPlan,     setSelPlan]    = useState("Annual");
   const [userType,    setUserType]   = useState(null);
   const [onboarded,   setOnboarded]  = useState(false);
   const [affIdx,      setAffIdx]     = useState(0);
@@ -1000,13 +1001,15 @@ export default function StrokeWise() {
                   </div>
                 ))}
                 <div style={{display:"flex",gap:8,marginTop:18,marginBottom:10}}>
-                  {[{label:"Monthly",price:"$7.99/mo",sub:"flexible"},{label:"Annual",price:"$44.99/yr",sub:"save 53%",highlight:true}].map(pl=>(
-                    <div key={pl.label} style={{flex:1,background:pl.highlight?`${TEAL}20`:"rgba(30,58,95,0.05)",border:`1px solid ${pl.highlight?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:14,padding:"10px 6px",textAlign:"center"}}>
+                  {[{label:"Monthly",price:"$7.99/mo",sub:"flexible"},{label:"Annual",price:"$44.99/yr",sub:"save 53%"}].map(pl=>{
+                    const sel=selPlan===pl.label;
+                    return(
+                    <button key={pl.label} onClick={()=>setSelPlan(pl.label)} style={{flex:1,background:sel?`${TEAL}20`:"rgba(30,58,95,0.05)",border:`2px solid ${sel?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:14,padding:"10px 6px",textAlign:"center",cursor:"pointer"}}>
                       <div style={{fontSize:10,color:"#9aabb8",marginBottom:3}}>{pl.label}</div>
                       <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{pl.price}</div>
-                      <div style={{fontSize:9,color:pl.highlight?TEAL:"#9aabb8",marginTop:2}}>{pl.sub}</div>
-                    </div>
-                  ))}
+                      <div style={{fontSize:9,color:sel?TEAL:"#9aabb8",marginTop:2}}>{pl.sub}</div>
+                    </button>
+                  )})}
                 </div>
                 <button onClick={()=>{setPremium(true);setModal(false);}} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",marginBottom:10}}>Start Free 7-Day Trial</button>
                 <button onClick={()=>setModal(false)} style={{width:"100%",background:"rgba(30,58,95,0.05)",border:"1px solid rgba(30,58,95,0.08)",borderRadius:16,padding:"11px",color:"#5a6a7a",fontSize:13,cursor:"pointer"}}>Maybe later</button>
