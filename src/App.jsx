@@ -285,7 +285,7 @@ export default function StrokeWise() {
     const maxIdx = isCG ? CAREGIVER_TOPICS.length : EDUCATION.length;
     const curIdx = isCG ? Math.abs(eduIdx)-1 : eduIdx;
     return (
-      <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",maxWidth:430,margin:"0 auto",padding:"50px 20px 80px"}}>
+      <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",maxWidth:"100%",margin:"0 auto",padding:"50px 16px 80px"}}>
         <button onClick={()=>setEduIdx(null)} style={{background:"transparent",border:"none",color:NAVY,fontSize:14,cursor:"pointer",marginBottom:20}}>← Back to Learn</button>
         <div style={{fontSize:40,marginBottom:12}}>{topic.icon}</div>
         <div style={{fontSize:22,fontWeight:700,color:isCG?WARM:NAVY,marginBottom:16,lineHeight:1.25}}>{topic.title}</div>
@@ -304,7 +304,7 @@ export default function StrokeWise() {
 
   /* ── Game screen ── */
   if (game) return (
-    <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",maxWidth:430,margin:"0 auto",padding:"50px 20px 80px"}}>
+    <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",maxWidth:"100%",margin:"0 auto",padding:"50px 16px 80px"}}>
       <style>{`@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}`}</style>
       <button onClick={()=>setGame(null)} style={{background:"transparent",border:"none",color:NAVY,fontSize:14,cursor:"pointer",marginBottom:20}}>← Back to Brain Training</button>
 
@@ -708,7 +708,7 @@ export default function StrokeWise() {
 
   /* ══════════════════════ MAIN APP ══════════════════════ */
   return (
-    <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",color:NAVY,maxWidth:430,margin:"0 auto",position:"relative",overflowX:"hidden"}}>
+    <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",color:NAVY,maxWidth:"100%",margin:"0 auto",position:"relative",overflowX:"hidden"}}>
       <style>{`
         @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
         textarea::placeholder,input::placeholder{color:#9aabb8}
