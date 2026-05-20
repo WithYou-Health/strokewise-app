@@ -1423,7 +1423,7 @@ export default function StrokeWise() {
 
           {/* Premium Modal */}
           {modal&&(
-            <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",display:"flex",alignItems:"flex-end",zIndex:200}} onClick={()=>setModal(false)}>
+            <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",display:"flex",alignItems:"center",zIndex:200}} onClick={()=>setModal(false)}>
               <div style={{background:"linear-gradient(160deg,#fff,#f8f4ef)",borderRadius:"26px 26px 0 0",padding:"28px 24px 44px",width:"100%",border:"1px solid rgba(30,58,95,0.1)",boxSizing:"border-box",maxHeight:"85vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
                 <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:16,flexWrap:"wrap"}}>
                   {["🚫 No ads ever","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
