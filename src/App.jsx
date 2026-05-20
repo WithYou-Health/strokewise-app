@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
 /* ═══════════════════════ DATA ═══════════════════════ */
 
@@ -181,6 +182,25 @@ export default function StrokeWise() {
     const t = setInterval(() => setAffIdx(i => (i+1) % AFFIRMATIONS.length), 6000);
     return () => clearInterval(t);
   }, []);
+
+  const STRIPE_KEY = "pk_live_51TXnrWHvzoFiGNgHsWGmx3EyvBed3YdtQwycuodMlkT4vBIPp4oTdLR6b1wPOAKGvEWVoCt T7qWRZ52uhWSqPFkv00T5My1Mku";
+  const PRICE_MONTHLY = "price_1TYzShHvzoFiGNgHgUBKZEU3";
+  const PRICE_YEARLY  = "price_1TYzUiHvzoFiGNgHVMXYnquJ";
+
+  async function handleCheckout(priceId) {
+    try {
+      const stripe = await loadStripe(STRIPE_KEY);
+      await stripe.redirectToCheckout({
+        lineItems:[{price:priceId, quantity:1}],
+        mode:"subscription",
+        successUrl: window.location.origin + "?success=true",
+        cancelUrl:  window.location.origin + "?canceled=true",
+        subscriptionData:{ trial_period_days: 7 },
+      });
+    } catch(e) {
+      console.error("Stripe error",e);
+    }
+  }
 
   const gate = (fn) => premium ? fn() : setModal(true);
 
@@ -734,7 +754,7 @@ export default function StrokeWise() {
               ))}
             </div>
             <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:16,flexWrap:"wrap"}}>
-              {["🚫 No ads","🚫 No pop-ups","✓ No credit card needed"].map(b=>(
+              {["🚫 No ads","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
                 <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
               ))}
             </div>
@@ -780,7 +800,7 @@ export default function StrokeWise() {
 
                 {/* Trust badges */}
                 <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:14,flexWrap:"wrap"}}>
-                  {["🚫 No ads","🚫 No pop-ups","✓ No credit card needed"].map(b=>(
+                  {["🚫 No ads","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
                     <div key={b} style={{background:`${TEAL}10`,border:`1px solid ${TEAL}25`,borderRadius:20,padding:"3px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
                   ))}
                 </div>
@@ -985,7 +1005,7 @@ export default function StrokeWise() {
             <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",display:"flex",alignItems:"flex-end",zIndex:200}} onClick={()=>setModal(false)}>
               <div style={{background:"linear-gradient(160deg,#fff,#f8f4ef)",borderRadius:"26px 26px 0 0",padding:"28px 24px 44px",width:"100%",border:"1px solid rgba(30,58,95,0.1)",boxSizing:"border-box"}} onClick={e=>e.stopPropagation()}>
                 <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:18,flexWrap:"wrap"}}>
-                  {["🚫 No ads ever","🚫 No pop-ups","✓ No credit card needed","✓ Cancel anytime"].map(b=>(
+                  {["🚫 No ads ever","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
                     <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
                   ))}
                 </div>
@@ -1011,11 +1031,11 @@ export default function StrokeWise() {
                     </button>
                   )})}
                 </div>
-                <button onClick={()=>{setPremium(true);setModal(false);}} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",marginBottom:10}}>Start Free 7-Day Trial</button>
+                <button onClick={()=>handleCheckout(selPlan==="Annual"?PRICE_YEARLY:PRICE_MONTHLY)} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",marginBottom:10}}>Start Free 7-Day Trial</button>
                 <button onClick={()=>setModal(false)} style={{width:"100%",background:"rgba(30,58,95,0.05)",border:"1px solid rgba(30,58,95,0.08)",borderRadius:16,padding:"11px",color:"#5a6a7a",fontSize:13,cursor:"pointer"}}>Maybe later</button>
                 <div style={{textAlign:"center",marginTop:12,fontSize:11,color:"#9aabb8",lineHeight:1.7}}>
-                  🚫 No credit card required for trial<br/>
-                  🚫 No ads or pop-ups — not now, not ever
+                  🚫 No ads or pop-ups — not now, not ever<br/>
+                  ✓ Free for 7 days — cancel anytime before being charged
                 </div>
               </div>
             </div>
