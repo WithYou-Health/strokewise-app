@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="#2a7f8a"/>
+  <!-- Brain shape -->
+  <g transform="translate(256,240)">
+    <!-- Left hemisphere -->
+    <path d="M-20,-80 C-80,-80 -130,-50 -140,0 C-150,40 -120,80 -80,90 C-60,95 -40,90 -20,85 L-20,-80 Z" fill="white" opacity="0.95"/>
+    <!-- Right hemisphere -->
+    <path d="M20,-80 C80,-80 130,-50 140,0 C150,40 120,80 80,90 C60,95 40,90 20,85 L20,-80 Z" fill="white" opacity="0.95"/>
+    <!-- Center divide -->
+    <rect x="-4" y="-80" width="8" height="170" rx="4" fill="#2a7f8a"/>
+    <!-- Brain folds left -->
+    <path d="M-40,-40 Q-80,-20 -70,20" stroke="#2a7f8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M-50,10 Q-90,30 -75,60" stroke="#2a7f8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- Brain folds right -->
+    <path d="M40,-40 Q80,-20 70,20" stroke="#2a7f8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M50,10 Q90,30 75,60" stroke="#2a7f8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Text -->
+  <text x="256" y="420" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="white" text-anchor="middle">StrokeWise</text>
+</svg>
