@@ -1,4 +1,3 @@
-     </>)}
 import { useState, useEffect, useRef } from "react";
 
 const BG   = "linear-gradient(160deg,#f8f4ef 0%,#eef4f8 50%,#f4f0fa 100%)";
