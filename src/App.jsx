@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-/* ═══════════════════ CONSTANTS ═══════════════════ */
 const BG   = "linear-gradient(160deg,#f8f4ef 0%,#eef4f8 50%,#f4f0fa 100%)";
 const TEAL = "#2a7f8a";
 const NAVY = "#1e3a5f";
@@ -8,7 +7,6 @@ const WARM = "#c8613a";
 const GOLD = "#c9920a";
 const card = (x={}) => ({ background:"#fff", borderRadius:20, boxShadow:"0 2px 20px rgba(30,58,95,0.07)", padding:"18px", border:"1px solid rgba(30,58,95,0.07)", ...x });
 
-/* ═══════════════════ DATA ═══════════════════ */
 const EMERGENCY = [
   { country:"United Kingdom",  number:"999",        alt:"112",              emoji:"🇬🇧" },
   { country:"United States",   number:"911",        alt:"112",              emoji:"🇺🇸" },
@@ -28,10 +26,10 @@ const EMERGENCY = [
 ];
 
 const FAST_SIGNS = [
-  { letter:"F", word:"FACE",   color:"#ef4444", desc:"Ask them to smile. Does one side of their face droop or look uneven?",         action:"Look for an uneven or drooping smile" },
-  { letter:"A", word:"ARMS",   color:"#f97316", desc:"Ask them to raise both arms. Does one arm drift downward or feel weak?",        action:"Ask them to hold both arms up for 10 seconds" },
-  { letter:"S", word:"SPEECH", color:"#eab308", desc:"Ask them to repeat a simple phrase. Is their speech slurred or strange?",       action:"Say 'The sky is blue' — listen for slurring" },
-  { letter:"T", word:"TIME",   color:"#22c55e", desc:"Time to call emergency services immediately. Note the time symptoms started.",   action:"Call emergency services NOW. Note the exact time." },
+  { letter:"F", word:"FACE",   color:"#ef4444", desc:"Ask them to smile. Does one side of their face droop or look uneven?",       action:"Look for an uneven or drooping smile" },
+  { letter:"A", word:"ARMS",   color:"#f97316", desc:"Ask them to raise both arms. Does one arm drift downward or feel weak?",      action:"Ask them to hold both arms up for 10 seconds" },
+  { letter:"S", word:"SPEECH", color:"#eab308", desc:"Ask them to repeat a simple phrase. Is their speech slurred or strange?",     action:"Say 'The sky is blue' — listen for slurring" },
+  { letter:"T", word:"TIME",   color:"#22c55e", desc:"Time to call emergency services immediately. Note the time symptoms started.", action:"Call emergency services NOW. Note the exact time." },
 ];
 
 const OTHER_SIGNS = [
@@ -83,22 +81,21 @@ const WORD_RECOG_SETS = [
 ];
 
 const BRAIN_FREE = [
-  { id:"memory",    name:"Memory Match",    icon:"🃏", desc:"Flip cards to find matching pairs. Trains short-term memory.",              diff:"Easy"   },
-  { id:"wordrecall",name:"Word Recall",     icon:"📝", desc:"Remember a list of words, then recall them. Trains verbal memory.",         diff:"Medium" },
-  { id:"pattern",   name:"Pattern Sequence",icon:"🔢", desc:"Watch a sequence of numbers and repeat it back. Trains working memory.",   diff:"Easy"   },
-  { id:"maths",     name:"Simple Maths",    icon:"➕", desc:"Gentle addition and subtraction. Rebuilds number confidence step by step.", diff:"Easy"   },
-  { id:"colour",    name:"Colour by Number",icon:"🎨", desc:"Tap numbered sections to paint a picture. Calming and creative.",          diff:"Easy"   },
+  { id:"memory",    name:"Memory Match",     icon:"🃏", desc:"Flip cards to find matching pairs. Trains short-term memory.",              diff:"Easy"   },
+  { id:"wordrecall",name:"Word Recall",      icon:"📝", desc:"Remember a list of words, then recall them. Trains verbal memory.",         diff:"Medium" },
+  { id:"pattern",   name:"Pattern Sequence", icon:"🔢", desc:"Watch a sequence of numbers and repeat it back. Trains working memory.",    diff:"Easy"   },
+  { id:"maths",     name:"Simple Maths",     icon:"➕", desc:"Gentle addition and subtraction. Rebuilds number confidence step by step.", diff:"Easy"   },
+  { id:"colour",    name:"Colour by Number", icon:"🎨", desc:"Tap numbered sections to paint a picture. Calming and creative.",          diff:"Easy"   },
 ];
 
 const BRAIN_PREMIUM = [
-  { id:"stroop",   name:"Colour Word",        icon:"🌈", desc:"Name the ink colour, not the word. Trains attention & inhibition.",    diff:"Hard"   },
-  { id:"wordrecog",name:"Word Recognition",   icon:"🔤", desc:"Identify the correctly spelled word. Trains language recovery.",       diff:"Medium" },
-  { id:"numrecog", name:"Number Recognition", icon:"🔢", desc:"Identify numbers quickly. Rebuilds numerical cognition.",              diff:"Easy"   },
-  { id:"category", name:"Category Sort",      icon:"🗂️", desc:"Sort items into the right categories. Trains executive function.",     diff:"Medium" },
-  { id:"trail",    name:"Visual Trail",       icon:"👁️", desc:"Connect numbered dots in order. Trains processing speed.",             diff:"Hard"   },
+  { id:"stroop",   name:"Colour Word",        icon:"🌈", desc:"Name the ink colour, not the word. Trains attention & inhibition.",  diff:"Hard"   },
+  { id:"wordrecog",name:"Word Recognition",   icon:"🔤", desc:"Identify the correctly spelled word. Trains language recovery.",     diff:"Medium" },
+  { id:"numrecog", name:"Number Recognition", icon:"🔢", desc:"Identify numbers quickly. Rebuilds numerical cognition.",            diff:"Easy"   },
+  { id:"category", name:"Category Sort",      icon:"🗂️", desc:"Sort items into the right categories. Trains executive function.",   diff:"Medium" },
+  { id:"trail",    name:"Visual Trail",       icon:"👁️", desc:"Connect numbered dots in order. Trains processing speed.",           diff:"Hard"   },
 ];
 
-/* ═══════════════════ COLOUR BY NUMBER DATA ═══════════════════ */
 const CBN_PALETTE = [
   {num:1,  color:"#ef4444", name:"Red"      },
   {num:2,  color:"#f97316", name:"Orange"   },
@@ -116,8 +113,6 @@ const CBN_PALETTE = [
   {num:14, color:"#1e3a5f", name:"Navy"     },
   {num:15, color:"#1a0a00", name:"Black"    },
 ];
-
-// Each scene: { name, emoji, free, defaults:{id:color}, sections:[{id,label,cx,cy}], render(colFn) }
 const CBN_SCENES = [
   {
     name:"Puppy", emoji:"🐶", free:true,
@@ -133,7 +128,7 @@ const CBN_SCENES = [
     render(c) {
       return (
         <>
-          <rect x="0" y="0" width="280" height="280" fill={c(1)} onClick={()=>{}} />
+          <rect x="0" y="0" width="280" height="280" fill={c(1)} />
           <ellipse cx="140" cy="270" rx="140" ry="18" fill={c(2)} /><rect x="0" y="258" width="280" height="22" fill={c(2)} />
           <rect x="86" y="212" width="28" height="46" rx="10" fill={c(17)} stroke={NAVY} strokeWidth="1.5" />
           <rect x="166" y="212" width="28" height="46" rx="10" fill={c(18)} stroke={NAVY} strokeWidth="1.5" />
@@ -227,8 +222,6 @@ const CBN_SCENES = [
           <rect x="133" y="142" width="14" height="120" rx="7" fill={c(3)} stroke={NAVY} strokeWidth="1.2" />
           <ellipse cx="106" cy="194" rx="36" ry="14" fill={c(4)} stroke={NAVY} strokeWidth="1.2" transform="rotate(-22,106,194)" />
           <ellipse cx="174" cy="194" rx="36" ry="14" fill={c(5)} stroke={NAVY} strokeWidth="1.2" transform="rotate(22,174,194)" />
-          <line x1="106" y1="194" x2="134" y2="188" stroke="rgba(22,101,52,0.4)" strokeWidth="1.5" />
-          <line x1="174" y1="194" x2="146" y2="188" stroke="rgba(22,101,52,0.4)" strokeWidth="1.5" />
           <ellipse cx="140" cy="70" rx="18" ry="36" fill={c(6)} stroke={NAVY} strokeWidth="1.2" />
           <ellipse cx="140" cy="148" rx="18" ry="36" fill={c(7)} stroke={NAVY} strokeWidth="1.2" />
           <ellipse cx="74" cy="109" rx="36" ry="18" fill={c(8)} stroke={NAVY} strokeWidth="1.2" />
@@ -239,8 +232,6 @@ const CBN_SCENES = [
           <ellipse cx="186" cy="140" rx="24" ry="24" fill={c(13)} stroke={NAVY} strokeWidth="1.2" transform="rotate(-45,186,140)" />
           <circle cx="140" cy="109" r="34" fill={c(14)} stroke={NAVY} strokeWidth="1.5" />
           <circle cx="140" cy="109" r="16" fill={c(15)} stroke={NAVY} strokeWidth="1.2" />
-          <circle cx="134" cy="103" r="2.5" fill="rgba(0,0,0,0.12)" /><circle cx="146" cy="103" r="2.5" fill="rgba(0,0,0,0.12)" />
-          <circle cx="140" cy="115" r="2.5" fill="rgba(0,0,0,0.12)" />
         </>
       );
     }
@@ -437,7 +428,6 @@ const CBN_SCENES = [
           <ellipse cx="112" cy="185" rx="36" ry="56" fill={c(4)} stroke={NAVY} strokeWidth="1.5" />
           <ellipse cx="140" cy="168" rx="38" ry="58" fill={c(3)} stroke={NAVY} strokeWidth="1.5" />
           <ellipse cx="140" cy="178" rx="28" ry="40" fill={c(5)} stroke={NAVY} strokeWidth="1" />
-          <path d="M 118,185 Q 140,178 162,185 Q 160,200 140,204 Q 120,200 118,185 Z" fill="rgba(0,0,0,0.12)" />
           <ellipse cx="140" cy="112" rx="36" ry="32" fill={c(6)} stroke={NAVY} strokeWidth="1.2" />
           <circle cx="120" cy="106" r="18" fill={c(7)} stroke={NAVY} strokeWidth="1.2" />
           <circle cx="160" cy="106" r="18" fill={c(7)} stroke={NAVY} strokeWidth="1.2" />
@@ -547,7 +537,6 @@ const CBN_SCENES = [
           <line x1="55" y1="187" x2="225" y2="187" stroke="rgba(0,0,0,0.15)" strokeWidth="6" />
           <line x1="55" y1="203" x2="225" y2="203" stroke="rgba(0,0,0,0.15)" strokeWidth="6" />
           <polygon points="38,148 140,68 242,148" fill={c(3)} stroke={NAVY} strokeWidth="2" />
-          <polygon points="38,148 140,68 140,68" fill={c(12)} stroke={NAVY} strokeWidth="1" />
           <rect x="112" y="130" width="56" height="42" rx="4" fill={c(6)} stroke={NAVY} strokeWidth="1.2" />
           <rect x="116" y="134" width="24" height="34" rx="2" fill={c(13)} stroke={NAVY} strokeWidth="1" />
           <rect x="140" y="134" width="24" height="34" rx="2" fill={c(13)} stroke={NAVY} strokeWidth="1" />
@@ -564,121 +553,96 @@ const CBN_SCENES = [
     }
   },
 ];
-
-/* ═══════════════════ MAIN APP ═══════════════════ */
 export default function StrokeWise() {
-  const [screen,     setScreen]    = useState("home");
-  const [premium,    setPremium]   = useState(false);
-  const [modal,      setModal]     = useState(false);
-  const [selPlan,    setSelPlan]   = useState("Annual");
-  const [userType,   setUserType]  = useState(null);
-  const [onboarded,  setOnboarded] = useState(false);
-  const [affIdx,     setAffIdx]    = useState(0);
-  const [eduIdx,     setEduIdx]    = useState(null);
-  const [game,       setGame]      = useState(null);
-  const [fadeIn,     setFadeIn]    = useState(false);
+  const [screen,setScreen]=useState("home");
+  const [premium,setPremium]=useState(false);
+  const [modal,setModal]=useState(false);
+  const [selPlan,setSelPlan]=useState("Annual");
+  const [userType,setUserType]=useState(null);
+  const [onboarded,setOnboarded]=useState(false);
+  const [affIdx,setAffIdx]=useState(0);
+  const [eduIdx,setEduIdx]=useState(null);
+  const [game,setGame]=useState(null);
+  const [fadeIn,setFadeIn]=useState(false);
+  const [memCards,setMemCards]=useState([]);
+  const [flipped,setFlipped]=useState([]);
+  const [matched,setMatched]=useState([]);
+  const [memMoves,setMemMoves]=useState(0);
+  const [memWon,setMemWon]=useState(false);
+  const [wrPhase,setWrPhase]=useState("study");
+  const [wrInput,setWrInput]=useState("");
+  const [wrAnswers,setWrAnswers]=useState([]);
+  const [wrTimer,setWrTimer]=useState(60);
+  const timerRef=useRef(null);
+  const [patSeq,setPatSeq]=useState([]);
+  const [patInput,setPatInput]=useState([]);
+  const [patPhase,setPatPhase]=useState("show");
+  const [patLevel,setPatLevel]=useState(3);
+  const [showIdx,setShowIdx]=useState(-1);
+  const [mathQ,setMathQ]=useState(null);
+  const [mathScore,setMathScore]=useState(0);
+  const [mathTotal,setMathTotal]=useState(0);
+  const [mathDone,setMathDone]=useState(false);
+  const [mathFeedback,setMathFeedback]=useState(null);
+  const [cbnScene,setCbnScene]=useState(0);
+  const [cbnPalette,setCbnPalette]=useState(CBN_PALETTE[0]);
+  const [cbnPainted,setCbnPainted]=useState({});
+  const [cbnShowNums,setCbnShowNums]=useState(false);
+  const COLORS=[{word:"RED",color:"#ef4444"},{word:"BLUE",color:"#3b82f6"},{word:"GREEN",color:"#22c55e"},{word:"YELLOW",color:"#eab308"}];
+  const [stroopItem,setStroopItem]=useState(null);
+  const [stroopScore,setStroopScore]=useState(0);
+  const [stroopTotal,setStroopTotal]=useState(0);
+  const [stroopDone,setStroopDone]=useState(false);
+  const [wrIdx,setWrIdx]=useState(0);
+  const [wrScore,setWrScore]=useState(0);
+  const [wrDone,setWrDone]=useState(false);
+  const [wrFeedback,setWrFeedback]=useState(null);
+  const [numQ,setNumQ]=useState(null);
+  const [numScore,setNumScore]=useState(0);
+  const [numTotal,setNumTotal]=useState(0);
+  const [numDone,setNumDone]=useState(false);
 
-  // Memory match
-  const [memCards, setMemCards] = useState([]);
-  const [flipped,  setFlipped]  = useState([]);
-  const [matched,  setMatched]  = useState([]);
-  const [memMoves, setMemMoves] = useState(0);
-  const [memWon,   setMemWon]   = useState(false);
-
-  // Word recall
-  const [wrPhase,   setWrPhase]   = useState("study");
-  const [wrInput,   setWrInput]   = useState("");
-  const [wrAnswers, setWrAnswers] = useState([]);
-  const [wrTimer,   setWrTimer]   = useState(60);
-  const timerRef = useRef(null);
-
-  // Pattern
-  const [patSeq,   setPatSeq]   = useState([]);
-  const [patInput, setPatInput] = useState([]);
-  const [patPhase, setPatPhase] = useState("show");
-  const [patLevel, setPatLevel] = useState(3);
-  const [showIdx,  setShowIdx]  = useState(-1);
-
-  // Maths
-  const [mathQ,        setMathQ]        = useState(null);
-  const [mathScore,    setMathScore]    = useState(0);
-  const [mathTotal,    setMathTotal]    = useState(0);
-  const [mathDone,     setMathDone]     = useState(false);
-  const [mathFeedback, setMathFeedback] = useState(null);
-
-  // Colour by number
-  const [cbnScene,    setCbnScene]    = useState(0);
-  const [cbnPalette,  setCbnPalette]  = useState(CBN_PALETTE[0]);
-  const [cbnPainted,  setCbnPainted]  = useState({});
-  const [cbnShowNums, setCbnShowNums] = useState(false);
-
-  // Stroop
-  const COLORS = [{word:"RED",color:"#ef4444"},{word:"BLUE",color:"#3b82f6"},{word:"GREEN",color:"#22c55e"},{word:"YELLOW",color:"#eab308"}];
-  const [stroopItem,  setStroopItem]  = useState(null);
-  const [stroopScore, setStroopScore] = useState(0);
-  const [stroopTotal, setStroopTotal] = useState(0);
-  const [stroopDone,  setStroopDone]  = useState(false);
-
-  // Word recognition
-  const [wrIdx,      setWrIdx]      = useState(0);
-  const [wrScore,    setWrScore]    = useState(0);
-  const [wrDone,     setWrDone]     = useState(false);
-  const [wrFeedback, setWrFeedback] = useState(null);
-
-  // Number recognition
-  const [numQ,     setNumQ]     = useState(null);
-  const [numScore, setNumScore] = useState(0);
-  const [numTotal, setNumTotal] = useState(0);
-  const [numDone,  setNumDone]  = useState(false);
-
-  useEffect(() => {
+  useEffect(()=>{
     setFadeIn(true);
-    const t = setInterval(() => setAffIdx(i => (i+1) % AFFIRMATIONS.length), 6000);
-    return () => clearInterval(t);
-  }, []);
+    const t=setInterval(()=>setAffIdx(i=>(i+1)%AFFIRMATIONS.length),6000);
+    return ()=>clearInterval(t);
+  },[]);
 
-  const gate = (fn) => premium ? fn() : setModal(true);
+  const gate=(fn)=>premium?fn():setModal(true);
 
-  /* ── Memory ── */
-  function initMemory() {
-    const pairs = [...EMOJI_PAIRS.slice(0,6),...EMOJI_PAIRS.slice(0,6)].sort(()=>Math.random()-0.5).map((e,i)=>({id:i,emoji:e}));
-    setMemCards(pairs); setFlipped([]); setMatched([]); setMemMoves(0); setMemWon(false);
+  function initMemory(){
+    const pairs=[...EMOJI_PAIRS.slice(0,6),...EMOJI_PAIRS.slice(0,6)].sort(()=>Math.random()-0.5).map((e,i)=>({id:i,emoji:e}));
+    setMemCards(pairs);setFlipped([]);setMatched([]);setMemMoves(0);setMemWon(false);
   }
-  function flipCard(id) {
-    if (flipped.length===2||flipped.includes(id)||matched.includes(id)) return;
-    const nf=[...flipped,id]; setFlipped(nf);
-    if (nf.length===2) {
+  function flipCard(id){
+    if(flipped.length===2||flipped.includes(id)||matched.includes(id))return;
+    const nf=[...flipped,id];setFlipped(nf);
+    if(nf.length===2){
       setMemMoves(m=>m+1);
-      if (memCards[nf[0]].emoji===memCards[nf[1]].emoji) {
-        const nm=[...matched,...nf]; setMatched(nm); setFlipped([]);
-        if (nm.length===memCards.length) setMemWon(true);
-      } else setTimeout(()=>setFlipped([]),900);
+      if(memCards[nf[0]].emoji===memCards[nf[1]].emoji){
+        const nm=[...matched,...nf];setMatched(nm);setFlipped([]);
+        if(nm.length===memCards.length)setMemWon(true);
+      }else setTimeout(()=>setFlipped([]),900);
     }
   }
 
-  /* ── Word recall ── */
-  const studyWords = MEMORY_WORDS.slice(0,6);
-  function startWrRecall() {
-    setWrPhase("recall"); setWrAnswers([]); setWrInput("");
-    let t=60; setWrTimer(t);
-    timerRef.current = setInterval(()=>{ t--; setWrTimer(t); if(t<=0){clearInterval(timerRef.current);setWrPhase("result");}},1000);
+  const studyWords=MEMORY_WORDS.slice(0,6);
+  function startWrRecall(){
+    setWrPhase("recall");setWrAnswers([]);setWrInput("");
+    let t=60;setWrTimer(t);
+    timerRef.current=setInterval(()=>{t--;setWrTimer(t);if(t<=0){clearInterval(timerRef.current);setWrPhase("result");}},1000);
   }
-  function submitWrWord() {
-    if(!wrInput.trim()) return;
-    setWrAnswers(p=>[...p,wrInput.trim()]); setWrInput("");
-  }
-  const correctWords = wrAnswers.filter(w=>studyWords.map(s=>s.toLowerCase()).includes(w.toLowerCase()));
+  function submitWrWord(){if(!wrInput.trim())return;setWrAnswers(p=>[...p,wrInput.trim()]);setWrInput("");}
+  const correctWords=wrAnswers.filter(w=>studyWords.map(s=>s.toLowerCase()).includes(w.toLowerCase()));
 
-  /* ── Pattern ── */
-  function startPattern() {
+  function startPattern(){
     const seq=Array.from({length:patLevel},()=>Math.floor(Math.random()*9)+1);
-    setPatSeq(seq); setPatInput([]); setPatPhase("show"); setShowIdx(-1);
+    setPatSeq(seq);setPatInput([]);setPatPhase("show");setShowIdx(-1);
     let i=-1;
-    const iv=setInterval(()=>{ i++; setShowIdx(i); if(i>=seq.length){clearInterval(iv);setShowIdx(-1);setTimeout(()=>setPatPhase("input"),600);}},900);
+    const iv=setInterval(()=>{i++;setShowIdx(i);if(i>=seq.length){clearInterval(iv);setShowIdx(-1);setTimeout(()=>setPatPhase("input"),600);}},900);
   }
 
-  /* ── Maths ── */
-  function genMath() {
+  function genMath(){
     const op=["+","-"][Math.floor(Math.random()*2)];
     let a,b;
     if(op==="+"){a=Math.floor(Math.random()*10)+1;b=Math.floor(Math.random()*10)+1;}
@@ -693,52 +657,33 @@ export default function StrokeWise() {
   function answerMath(val){
     const ok=val===mathQ.answer;
     setMathFeedback(ok?"correct":"wrong");
-    if(ok) setMathScore(s=>s+1);
+    if(ok)setMathScore(s=>s+1);
     setMathTotal(t=>t+1);
-    setTimeout(()=>{ if(mathTotal+1>=10){setMathDone(true);}else{genMath();} },800);
+    setTimeout(()=>{if(mathTotal+1>=10){setMathDone(true);}else{genMath();}},800);
   }
 
-  /* ── Colour by number ── */
-  function cbnKey(sceneIdx, id) { return `${sceneIdx}-${id}`; }
-  function cbnGetColor(sceneIdx, id) {
-    const painted = cbnPainted[cbnKey(sceneIdx, id)];
-    if (painted) return painted;
-    return CBN_SCENES[sceneIdx]?.defaults[id] || "#e8eef4";
-  }
-  function cbnPaint(id) {
-    const k = cbnKey(cbnScene, id);
-    setCbnPainted(prev => ({ ...prev, [k]: cbnPalette.color }));
-  }
-  function cbnClear() {
-    setCbnPainted(prev => {
-      const next = {};
-      Object.keys(prev).forEach(k => {
-        if (!k.startsWith(`${cbnScene}-`)) next[k] = prev[k];
-      });
-      return next;
-    });
-  }
+  function cbnKey(si,id){return `${si}-${id}`;}
+  function cbnGetColor(si,id){const p=cbnPainted[cbnKey(si,id)];if(p)return p;return CBN_SCENES[si]?.defaults[id]||"#e8eef4";}
+  function cbnPaint(id){setCbnPainted(prev=>({...prev,[cbnKey(cbnScene,id)]:cbnPalette.color}));}
+  function cbnClear(){setCbnPainted(prev=>{const next={};Object.keys(prev).forEach(k=>{if(!k.startsWith(`${cbnScene}-`))next[k]=prev[k];});return next;});}
 
-  /* ── Stroop ── */
   function nextStroop(){
     if(stroopTotal>=10){setStroopDone(true);return;}
     const word=COLORS[Math.floor(Math.random()*4)];
-    let ink; do{ink=COLORS[Math.floor(Math.random()*4)];}while(ink.word===word.word);
+    let ink;do{ink=COLORS[Math.floor(Math.random()*4)];}while(ink.word===word.word);
     setStroopItem({...word,inkColor:ink.color,correctAnswer:ink.word,options:[...COLORS].sort(()=>Math.random()-0.5)});
   }
   function initStroop(){setStroopScore(0);setStroopTotal(0);setStroopDone(false);setStroopItem(null);}
   function answerStroop(ans){if(ans===stroopItem.correctAnswer)setStroopScore(s=>s+1);setStroopTotal(t=>t+1);nextStroop();}
 
-  /* ── Word recognition ── */
   function initWordRecog(){setWrIdx(0);setWrScore(0);setWrDone(false);setWrFeedback(null);}
   function answerWordRecog(opt){
     const ok=opt===WORD_RECOG_SETS[wrIdx].word;
     setWrFeedback(ok?"correct":"wrong");
-    if(ok) setWrScore(s=>s+1);
-    setTimeout(()=>{ setWrFeedback(null); if(wrIdx>=WORD_RECOG_SETS.length-1){setWrDone(true);}else{setWrIdx(i=>i+1);}},700);
+    if(ok)setWrScore(s=>s+1);
+    setTimeout(()=>{setWrFeedback(null);if(wrIdx>=WORD_RECOG_SETS.length-1){setWrDone(true);}else{setWrIdx(i=>i+1);}},700);
   }
 
-  /* ── Number recognition ── */
   function genNum(){
     const n=Math.floor(Math.random()*20)+1;
     const w1=n+(Math.random()>0.5?1:-1);
@@ -747,20 +692,18 @@ export default function StrokeWise() {
   }
   function initNumRecog(){setNumScore(0);setNumTotal(0);setNumDone(false);genNum();}
   function answerNum(val){
-    if(val===numQ.num) setNumScore(s=>s+1);
+    if(val===numQ.num)setNumScore(s=>s+1);
     setNumTotal(t=>t+1);
     if(numTotal+1>=10){setNumDone(true);}else{genNum();}
   }
 
-  const NAV = [{id:"home",icon:"🏠"},{id:"fast",icon:"⚡"},{id:"learn",icon:"📚"},{id:"brain",icon:"🧩"},{id:"emergency",icon:"🆘"}];
-
-  /* ══ EDUCATION DETAIL ══ */
-  if (eduIdx !== null) {
-    const isCG = eduIdx < 0;
-    const topic = isCG ? CAREGIVER_TOPICS[Math.abs(eduIdx)-1] : EDUCATION[eduIdx];
-    const maxIdx = isCG ? CAREGIVER_TOPICS.length : EDUCATION.length;
-    const curIdx = isCG ? Math.abs(eduIdx)-1 : eduIdx;
-    return (
+  const NAV=[{id:"home",icon:"🏠"},{id:"fast",icon:"⚡"},{id:"learn",icon:"📚"},{id:"brain",icon:"🧩"},{id:"emergency",icon:"🆘"}];
+  if(eduIdx!==null){
+    const isCG=eduIdx<0;
+    const topic=isCG?CAREGIVER_TOPICS[Math.abs(eduIdx)-1]:EDUCATION[eduIdx];
+    const maxIdx=isCG?CAREGIVER_TOPICS.length:EDUCATION.length;
+    const curIdx=isCG?Math.abs(eduIdx)-1:eduIdx;
+    return(
       <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",padding:"50px 20px 80px"}}>
         <button onClick={()=>setEduIdx(null)} style={{background:"transparent",border:"none",color:NAVY,fontSize:14,cursor:"pointer",marginBottom:20}}>← Back to Learn</button>
         <div style={{fontSize:40,marginBottom:12}}>{topic.icon}</div>
@@ -778,389 +721,200 @@ export default function StrokeWise() {
     );
   }
 
-  /* ══ GAME SCREEN ══ */
-  if (game) {
-    const curScene = CBN_SCENES[cbnScene] || CBN_SCENES[0];
-    const cbnMainSecs = curScene.sections.filter(s => s.label !== "Sky" && s.label !== "Grass" && s.label !== "Branch");
-    const cbnDone = cbnMainSecs.filter(s => cbnPainted[cbnKey(cbnScene, s.id)]).length;
-    const cbnPct = cbnMainSecs.length > 0 ? Math.round((cbnDone / cbnMainSecs.length) * 100) : 0;
-
-    return (
+  if(game){
+    const curScene=CBN_SCENES[cbnScene]||CBN_SCENES[0];
+    const cbnMainSecs=curScene.sections.filter(s=>s.label!=="Sky"&&s.label!=="Grass"&&s.label!=="Branch");
+    const cbnDone=cbnMainSecs.filter(s=>cbnPainted[cbnKey(cbnScene,s.id)]).length;
+    const cbnPct=cbnMainSecs.length>0?Math.round((cbnDone/cbnMainSecs.length)*100):0;
+    return(
       <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",padding:"50px 20px 80px"}}>
         <style>{`@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}`}</style>
         <button onClick={()=>setGame(null)} style={{background:"transparent",border:"none",color:NAVY,fontSize:14,cursor:"pointer",marginBottom:20}}>← Back to Brain Training</button>
 
-        {/* MEMORY MATCH */}
-        {game==="memory"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🃏 Memory Match</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Find all matching pairs · Moves: {memMoves}</div>
-            {!memCards.length
-              ?<button onClick={initMemory} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start Game</button>
-              :<div>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:16}}>
-                  {memCards.map((c,i)=>{
-                    const show=flipped.includes(i)||matched.includes(i);
-                    return <button key={i} onClick={()=>flipCard(i)} style={{aspectRatio:"1",background:show?"#fff":`linear-gradient(135deg,${TEAL},${NAVY})`,border:`2px solid ${show?"#e8f4f8":TEAL}`,borderRadius:14,fontSize:26,cursor:"pointer",transition:"all 0.3s",animation:matched.includes(i)?"pop 0.3s ease":"none"}}>{show?c.emoji:"?"}</button>;
-                  })}
-                </div>
-                {memWon&&<div style={{...card({textAlign:"center",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:"2px solid #22c55e"})}}>
-                  <div style={{fontSize:32,marginBottom:6}}>🎉</div>
-                  <div style={{fontSize:16,fontWeight:700,color:"#15803d"}}>Completed in {memMoves} moves!</div>
-                  <button onClick={initMemory} style={{marginTop:12,background:"#22c55e",border:"none",borderRadius:12,padding:"10px 24px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
-                </div>}
-              </div>
-            }
-          </div>
-        )}
-
-        {/* WORD RECALL */}
-        {game==="wordrecall"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>📝 Word Recall</div>
-            {wrPhase==="study"&&(
-              <div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Study these 6 words, then recall them from memory.</div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:20}}>
-                  {studyWords.map(w=><div key={w} style={{...card({padding:"14px",textAlign:"center"}),fontSize:18,fontWeight:700,color:NAVY}}>{w}</div>)}
-                </div>
-                <button onClick={startWrRecall} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:14,padding:"13px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}}>I'm Ready</button>
-              </div>
-            )}
-            {wrPhase==="recall"&&(
-              <div>
-                <div style={{...card({textAlign:"center",marginBottom:14,padding:"12px",background:"rgba(239,68,68,0.06)"})}}>
-                  <div style={{fontSize:30,fontWeight:700,color:"#dc2626"}}>{wrTimer}s</div>
-                  <div style={{fontSize:11,color:"#5a6a7a"}}>Type words you remember</div>
-                </div>
-                <div style={{display:"flex",gap:8,marginBottom:10}}>
-                  <input value={wrInput} onChange={e=>setWrInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submitWrWord()} placeholder="Type a word…" style={{flex:1,background:"#fff",border:`2px solid ${TEAL}`,borderRadius:12,padding:"10px 14px",fontSize:14,outline:"none",fontFamily:"Georgia,serif"}}/>
-                  <button onClick={submitWrWord} style={{background:TEAL,border:"none",borderRadius:12,padding:"10px 16px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Add</button>
-                </div>
-                <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {wrAnswers.map((w,i)=>{const ok=studyWords.map(s=>s.toLowerCase()).includes(w.toLowerCase()); return <div key={i} style={{background:ok?"#dcfce7":"#fee2e2",borderRadius:8,padding:"5px 12px",fontSize:13,color:ok?"#15803d":"#dc2626"}}>{w}</div>;})}
-                </div>
-              </div>
-            )}
-            {wrPhase==="result"&&(
-              <div style={{...card({textAlign:"center"})}}>
-                <div style={{fontSize:36,marginBottom:8}}>{correctWords.length>=5?"🏆":correctWords.length>=3?"👍":"💪"}</div>
-                <div style={{fontSize:20,fontWeight:700,color:NAVY,marginBottom:6}}>{correctWords.length}/{studyWords.length} Recalled</div>
-                <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.6,marginBottom:16}}>{correctWords.length>=5?"Excellent!":correctWords.length>=3?"Good effort — keep practising.":"Keep going — memory responds well to regular exercise."}</div>
-                <button onClick={()=>{setWrPhase("study");setWrAnswers([]);setWrInput("");}} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Try Again</button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* PATTERN */}
-        {game==="pattern"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔢 Pattern Sequence</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Watch the sequence, then repeat it. Level: {patLevel}</div>
-            {patPhase==="show"&&!patSeq.length&&<button onClick={startPattern} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:14,padding:"13px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}}>Show Sequence</button>}
-            {patPhase==="show"&&patSeq.length>0&&(
-              <div style={{textAlign:"center"}}>
-                <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Watch carefully…</div>
-                <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-                  {patSeq.map((n,i)=><div key={i} style={{width:52,height:52,borderRadius:12,background:showIdx===i?`linear-gradient(135deg,${WARM},${GOLD})`:"#e8eef4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:700,color:showIdx===i?"#fff":NAVY,transition:"all 0.3s"}}>{showIdx>=i?n:"?"}</div>)}
-                </div>
-              </div>
-            )}
-            {patPhase==="input"&&(
-              <div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Now tap the numbers in the same order:</div>
-                <div style={{display:"flex",gap:8,justifyContent:"center",marginBottom:20,flexWrap:"wrap"}}>
-                  {patSeq.map((_,i)=><div key={i} style={{width:44,height:44,borderRadius:10,background:i<patInput.length?TEAL:"#e8eef4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:700,color:i<patInput.length?"#fff":"#9aabb8"}}>{i<patInput.length?patInput[i]:"?"}</div>)}
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>
-                  {[1,2,3,4,5,6,7,8,9].map(n=>(
-                    <button key={n} onClick={()=>{const ni=[...patInput,n];setPatInput(ni);if(ni.length===patSeq.length)setPatPhase("result");}} style={{padding:"16px",background:"#fff",border:"2px solid #e8eef4",borderRadius:14,fontSize:20,fontWeight:700,color:NAVY,cursor:"pointer"}}>{n}</button>
-                  ))}
-                </div>
-                <button onClick={()=>setPatInput([])} style={{marginTop:10,width:"100%",background:"transparent",border:"1px solid #ddd",borderRadius:10,padding:"9px",color:"#5a6a7a",fontSize:12,cursor:"pointer"}}>Clear</button>
-              </div>
-            )}
-            {patPhase==="result"&&(
-              <div style={{...card({textAlign:"center"})}}>
-                {JSON.stringify(patInput)===JSON.stringify(patSeq)
-                  ?<><div style={{fontSize:36,marginBottom:8}}>🎉</div><div style={{fontSize:18,fontWeight:700,color:"#15803d"}}>Perfect!</div></>
-                  :<><div style={{fontSize:36,marginBottom:8}}>💪</div><div style={{fontSize:18,fontWeight:700,color:NAVY}}>Good try!</div><div style={{fontSize:13,color:"#5a6a7a",marginTop:4}}>Correct: {patSeq.join(" → ")}</div></>
-                }
-                <div style={{display:"flex",gap:8,marginTop:16}}>
-                  <button onClick={()=>{setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(l=>Math.min(l+1,7));}} style={{flex:1,background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Next Level</button>
-                  <button onClick={()=>{setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(3);}} style={{flex:1,background:"rgba(30,58,95,0.08)",border:"none",borderRadius:12,padding:"11px",color:NAVY,fontSize:13,cursor:"pointer"}}>Restart</button>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* SIMPLE MATHS */}
-        {game==="maths"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>➕ Simple Maths</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Gentle addition and subtraction. Score: {mathScore}/{mathTotal}</div>
-            {!mathQ&&!mathDone&&<button onClick={initMaths} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start</button>}
-            {mathQ&&!mathDone&&(
-              <div style={{textAlign:"center"}}>
-                <div style={{...card({padding:"32px",marginBottom:20})}}>
-                  <div style={{fontSize:52,fontWeight:700,color:NAVY}}>{mathQ.a} {mathQ.op} {mathQ.b} = ?</div>
-                  {mathFeedback&&<div style={{fontSize:18,marginTop:12,color:mathFeedback==="correct"?"#22c55e":"#ef4444",fontWeight:700}}>{mathFeedback==="correct"?"Correct!":"Not quite — keep going!"}</div>}
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
-                  {mathQ.options.map((o,i)=>(
-                    <button key={i} onClick={()=>!mathFeedback&&answerMath(o)} style={{padding:"18px",background:"#fff",border:`2px solid ${TEAL}30`,borderRadius:14,fontSize:24,fontWeight:700,color:NAVY,cursor:"pointer"}}>{o}</button>
-                  ))}
-                </div>
-                <div style={{fontSize:11,color:"#9aabb8",marginTop:14}}>{10-mathTotal} questions remaining</div>
-              </div>
-            )}
-            {mathDone&&(
-              <div style={{...card({textAlign:"center"})}}>
-                <div style={{fontSize:36,marginBottom:8}}>{mathScore>=8?"🏆":mathScore>=5?"👍":"💪"}</div>
-                <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{mathScore}/10 Correct</div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>{mathScore>=8?"Excellent!":mathScore>=5?"Good effort — keep practising.":"Every session rebuilds those pathways."}</div>
-                <button onClick={initMaths} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* COLOUR BY NUMBER */}
-        {game==="colour"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🎨 Colour by Number</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Pick a colour number then tap a section to paint it.</div>
-
-            {/* Scene tabs */}
-            <div style={{marginBottom:12}}>
-              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>FREE SCENES</div>
-              <div style={{display:"flex",gap:6,marginBottom:10}}>
-                {CBN_SCENES.filter(s=>s.free).map((s,i)=>{
-                  const idx = CBN_SCENES.indexOf(s);
-                  return (
-                    <button key={idx} onClick={()=>setCbnScene(idx)} style={{flex:1,background:cbnScene===idx?`${TEAL}15`:"#fff",border:`2px solid ${cbnScene===idx?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:12,padding:"8px 4px",cursor:"pointer"}}>
-                      <div style={{fontSize:20,marginBottom:2}}>{s.emoji}</div>
-                      <div style={{fontSize:10,fontWeight:700,color:cbnScene===idx?TEAL:NAVY}}>{s.name}</div>
-                    </button>
-                  );
-                })}
-              </div>
-              <div style={{fontSize:10,color:GOLD,letterSpacing:1.5,marginBottom:8}}>✦ PREMIUM SCENES</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:6}}>
-                {CBN_SCENES.filter(s=>!s.free).map((s,i)=>{
-                  const idx = CBN_SCENES.indexOf(s);
-                  return (
-                    <button key={idx} onClick={()=>premium?setCbnScene(idx):setModal(true)} style={{background:cbnScene===idx?`${WARM}15`:"rgba(201,146,10,0.05)",border:`2px solid ${cbnScene===idx?WARM:GOLD+"40"}`,borderRadius:12,padding:"8px 4px",cursor:"pointer",opacity:premium?1:0.75}}>
-                      <div style={{fontSize:18,marginBottom:2}}>{s.emoji}</div>
-                      <div style={{fontSize:9,fontWeight:700,color:cbnScene===idx?WARM:NAVY}}>{s.name}</div>
-                      {!premium&&<div style={{fontSize:8,color:GOLD}}>✦ Premium</div>}
-                    </button>
-                  );
-                })}
-              </div>
+        {game==="memory"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🃏 Memory Match</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Find all matching pairs · Moves: {memMoves}</div>
+          {!memCards.length?<button onClick={initMemory} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start Game</button>
+          :<div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:16}}>
+              {memCards.map((c,i)=>{const show=flipped.includes(i)||matched.includes(i);return<button key={i} onClick={()=>flipCard(i)} style={{aspectRatio:"1",background:show?"#fff":`linear-gradient(135deg,${TEAL},${NAVY})`,border:`2px solid ${show?"#e8f4f8":TEAL}`,borderRadius:14,fontSize:26,cursor:"pointer",transition:"all 0.3s",animation:matched.includes(i)?"pop 0.3s ease":"none"}}>{show?c.emoji:"?"}</button>;})}
             </div>
+            {memWon&&<div style={{...card({textAlign:"center",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:"2px solid #22c55e"})}}>
+              <div style={{fontSize:32,marginBottom:6}}>🎉</div>
+              <div style={{fontSize:16,fontWeight:700,color:"#15803d"}}>Completed in {memMoves} moves!</div>
+              <button onClick={initMemory} style={{marginTop:12,background:"#22c55e",border:"none",borderRadius:12,padding:"10px 24px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
+            </div>}
+          </div>}
+        </div>)}
 
-            {/* Progress */}
-            <div style={{...card({padding:"10px 14px",marginBottom:10,display:"flex",alignItems:"center",gap:10})}}>
-              <div style={{flex:1,background:"#e8eef4",borderRadius:8,height:8,overflow:"hidden"}}>
-                <div style={{width:`${cbnPct}%`,background:`linear-gradient(90deg,${TEAL},#22c55e)`,height:8,borderRadius:8,transition:"width 0.4s"}}/>
-              </div>
-              <div style={{fontSize:12,color:"#5a6a7a",whiteSpace:"nowrap"}}>{cbnDone}/{cbnMainSecs.length} · {cbnPct}%</div>
+        {game==="wordrecall"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>📝 Word Recall</div>
+          {wrPhase==="study"&&(<div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Study these 6 words, then recall them from memory.</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:20}}>{studyWords.map(w=><div key={w} style={{...card({padding:"14px",textAlign:"center"}),fontSize:18,fontWeight:700,color:NAVY}}>{w}</div>)}</div>
+            <button onClick={startWrRecall} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:14,padding:"13px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}}>I'm Ready</button>
+          </div>)}
+          {wrPhase==="recall"&&(<div>
+            <div style={{...card({textAlign:"center",marginBottom:14,padding:"12px",background:"rgba(239,68,68,0.06)"})}}>
+              <div style={{fontSize:30,fontWeight:700,color:"#dc2626"}}>{wrTimer}s</div>
+              <div style={{fontSize:11,color:"#5a6a7a"}}>Type words you remember</div>
             </div>
-
-            {/* Palette */}
-            <div style={{...card({marginBottom:10,padding:"12px"})}}>
-              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>PICK A COLOUR NUMBER</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:4}}>
-                {CBN_PALETTE.map(p=>(
-                  <button key={p.num} onClick={()=>setCbnPalette(p)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:cbnPalette.num===p.num?`${TEAL}18`:"transparent",border:`2px solid ${cbnPalette.num===p.num?TEAL:"rgba(30,58,95,0.08)"}`,borderRadius:10,padding:"5px 2px",cursor:"pointer"}}>
-                    <div style={{width:24,height:24,borderRadius:"50%",background:p.color,border:p.color==="#ffffff"?"1px solid #bbb":"none"}}/>
-                    <div style={{fontSize:10,fontWeight:700,color:cbnPalette.num===p.num?TEAL:NAVY}}>{p.num}</div>
-                  </button>
-                ))}
-              </div>
-              <div style={{marginTop:8,background:`${TEAL}10`,borderRadius:10,padding:"5px 10px",display:"flex",alignItems:"center",gap:6}}>
-                <div style={{width:16,height:16,borderRadius:"50%",background:cbnPalette.color,border:cbnPalette.color==="#ffffff"?"1px solid #bbb":"none",flexShrink:0}}/>
-                <div style={{fontSize:11,color:TEAL,fontWeight:600}}>#{cbnPalette.num} — {cbnPalette.name}</div>
-              </div>
+            <div style={{display:"flex",gap:8,marginBottom:10}}>
+              <input value={wrInput} onChange={e=>setWrInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submitWrWord()} placeholder="Type a word…" style={{flex:1,background:"#fff",border:`2px solid ${TEAL}`,borderRadius:12,padding:"10px 14px",fontSize:14,outline:"none",fontFamily:"Georgia,serif"}}/>
+              <button onClick={submitWrWord} style={{background:TEAL,border:"none",borderRadius:12,padding:"10px 16px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Add</button>
             </div>
+            <div style={{display:"flex",flexWrap:"wrap",gap:6}}>{wrAnswers.map((w,i)=>{const ok=studyWords.map(s=>s.toLowerCase()).includes(w.toLowerCase());return<div key={i} style={{background:ok?"#dcfce7":"#fee2e2",borderRadius:8,padding:"5px 12px",fontSize:13,color:ok?"#15803d":"#dc2626"}}>{w}</div>;})}</div>
+          </div>)}
+          {wrPhase==="result"&&(<div style={{...card({textAlign:"center"})}}>
+            <div style={{fontSize:36,marginBottom:8}}>{correctWords.length>=5?"🏆":correctWords.length>=3?"👍":"💪"}</div>
+            <div style={{fontSize:20,fontWeight:700,color:NAVY,marginBottom:6}}>{correctWords.length}/{studyWords.length} Recalled</div>
+            <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.6,marginBottom:16}}>{correctWords.length>=5?"Excellent!":correctWords.length>=3?"Good effort — keep practising.":"Keep going — memory responds well to regular exercise."}</div>
+            <button onClick={()=>{setWrPhase("study");setWrAnswers([]);setWrInput("");}} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Try Again</button>
+          </div>)}
+        </div>)}
 
-            {/* SVG Canvas */}
-            <div style={{...card({marginBottom:10,padding:"10px"})}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5}}>TAP A SECTION TO COLOUR IT</div>
-                <button onClick={()=>setCbnShowNums(n=>!n)} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}25`,borderRadius:8,padding:"3px 8px",fontSize:9,color:TEAL,fontWeight:700,cursor:"pointer"}}>{cbnShowNums?"Hide #s":"Show #s"}</button>
-              </div>
-              <svg viewBox="0 0 280 280" style={{width:"100%",borderRadius:10,display:"block"}}>
-                {/* Render illustration */}
-                {curScene.render(id => cbnGetColor(cbnScene, id))}
-                {/* Invisible tap targets for each section */}
-                {curScene.sections.map(s=>(
-                  <circle
-                    key={s.id}
-                    cx={s.cx} cy={s.cy} r={22}
-                    fill="transparent"
-                    stroke="transparent"
-                    style={{cursor:"pointer"}}
-                    onClick={()=>cbnPaint(s.id)}
-                  />
-                ))}
-                {/* Number labels */}
-                {cbnShowNums && curScene.sections.filter(s=>s.label!=="Sky"&&s.label!=="Grass"&&s.label!=="Branch").map(s=>(
-                  <text key={`n${s.id}`} x={s.cx} y={s.cy} fontSize="10" fontWeight="bold" fill="white" stroke={NAVY} strokeWidth="2.5" paintOrder="stroke" textAnchor="middle" dominantBaseline="middle" style={{pointerEvents:"none",userSelect:"none"}}>{s.id}</text>
-                ))}
-              </svg>
+        {game==="pattern"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔢 Pattern Sequence</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Watch the sequence, then repeat it. Level: {patLevel}</div>
+          {patPhase==="show"&&!patSeq.length&&<button onClick={startPattern} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:14,padding:"13px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}}>Show Sequence</button>}
+          {patPhase==="show"&&patSeq.length>0&&(<div style={{textAlign:"center"}}>
+            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Watch carefully…</div>
+            <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>{patSeq.map((n,i)=><div key={i} style={{width:52,height:52,borderRadius:12,background:showIdx===i?`linear-gradient(135deg,${WARM},${GOLD})`:"#e8eef4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:700,color:showIdx===i?"#fff":NAVY,transition:"all 0.3s"}}>{showIdx>=i?n:"?"}</div>)}</div>
+          </div>)}
+          {patPhase==="input"&&(<div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Now tap the numbers in the same order:</div>
+            <div style={{display:"flex",gap:8,justifyContent:"center",marginBottom:20,flexWrap:"wrap"}}>{patSeq.map((_,i)=><div key={i} style={{width:44,height:44,borderRadius:10,background:i<patInput.length?TEAL:"#e8eef4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:700,color:i<patInput.length?"#fff":"#9aabb8"}}>{i<patInput.length?patInput[i]:"?"}</div>)}</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>{[1,2,3,4,5,6,7,8,9].map(n=><button key={n} onClick={()=>{const ni=[...patInput,n];setPatInput(ni);if(ni.length===patSeq.length)setPatPhase("result");}} style={{padding:"16px",background:"#fff",border:"2px solid #e8eef4",borderRadius:14,fontSize:20,fontWeight:700,color:NAVY,cursor:"pointer"}}>{n}</button>)}</div>
+            <button onClick={()=>setPatInput([])} style={{marginTop:10,width:"100%",background:"transparent",border:"1px solid #ddd",borderRadius:10,padding:"9px",color:"#5a6a7a",fontSize:12,cursor:"pointer"}}>Clear</button>
+          </div>)}
+          {patPhase==="result"&&(<div style={{...card({textAlign:"center"})}}>
+            {JSON.stringify(patInput)===JSON.stringify(patSeq)?<><div style={{fontSize:36,marginBottom:8}}>🎉</div><div style={{fontSize:18,fontWeight:700,color:"#15803d"}}>Perfect!</div></>:<><div style={{fontSize:36,marginBottom:8}}>💪</div><div style={{fontSize:18,fontWeight:700,color:NAVY}}>Good try!</div><div style={{fontSize:13,color:"#5a6a7a",marginTop:4}}>Correct: {patSeq.join(" → ")}</div></>}
+            <div style={{display:"flex",gap:8,marginTop:16}}>
+              <button onClick={()=>{setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(l=>Math.min(l+1,7));}} style={{flex:1,background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Next Level</button>
+              <button onClick={()=>{setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(3);}} style={{flex:1,background:"rgba(30,58,95,0.08)",border:"none",borderRadius:12,padding:"11px",color:NAVY,fontSize:13,cursor:"pointer"}}>Restart</button>
             </div>
+          </div>)}
+        </div>)}
 
-            {/* Section guide */}
-            <div style={{...card({marginBottom:10,padding:"12px"})}}>
-              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>SECTION GUIDE — tap to colour</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4}}>
-                {cbnMainSecs.map(s=>(
-                  <button key={s.id} onClick={()=>cbnPaint(s.id)} style={{display:"flex",alignItems:"center",gap:6,background:cbnPainted[cbnKey(cbnScene,s.id)]?`${TEAL}08`:"rgba(30,58,95,0.02)",border:`1px solid ${cbnPainted[cbnKey(cbnScene,s.id)]?TEAL+"25":"rgba(30,58,95,0.07)"}`,borderRadius:8,padding:"5px 8px",cursor:"pointer",textAlign:"left"}}>
-                    <div style={{width:14,height:14,borderRadius:"50%",background:cbnGetColor(cbnScene,s.id),border:"1px solid rgba(30,58,95,0.15)",flexShrink:0}}/>
-                    <div style={{flex:1}}>
-                      <span style={{fontSize:9,fontWeight:700,color:NAVY}}>#{s.id} </span>
-                      <span style={{fontSize:8,color:"#5a6a7a"}}>{s.label}</span>
-                    </div>
-                    {cbnPainted[cbnKey(cbnScene,s.id)]&&<span style={{fontSize:9,color:"#22c55e"}}>✓</span>}
-                  </button>
-                ))}
-              </div>
+        {game==="maths"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>➕ Simple Maths</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Gentle addition and subtraction. Score: {mathScore}/{mathTotal}</div>
+          {!mathQ&&!mathDone&&<button onClick={initMaths} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start</button>}
+          {mathQ&&!mathDone&&(<div style={{textAlign:"center"}}>
+            <div style={{...card({padding:"32px",marginBottom:20})}}>
+              <div style={{fontSize:52,fontWeight:700,color:NAVY}}>{mathQ.a} {mathQ.op} {mathQ.b} = ?</div>
+              {mathFeedback&&<div style={{fontSize:18,marginTop:12,color:mathFeedback==="correct"?"#22c55e":"#ef4444",fontWeight:700}}>{mathFeedback==="correct"?"Correct!":"Not quite — keep going!"}</div>}
             </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>{mathQ.options.map((o,i)=><button key={i} onClick={()=>!mathFeedback&&answerMath(o)} style={{padding:"18px",background:"#fff",border:`2px solid ${TEAL}30`,borderRadius:14,fontSize:24,fontWeight:700,color:NAVY,cursor:"pointer"}}>{o}</button>)}</div>
+            <div style={{fontSize:11,color:"#9aabb8",marginTop:14}}>{10-mathTotal} questions remaining</div>
+          </div>)}
+          {mathDone&&(<div style={{...card({textAlign:"center"})}}>
+            <div style={{fontSize:36,marginBottom:8}}>{mathScore>=8?"🏆":mathScore>=5?"👍":"💪"}</div>
+            <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{mathScore}/10 Correct</div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>{mathScore>=8?"Excellent!":mathScore>=5?"Good effort — keep practising.":"Every session rebuilds those pathways."}</div>
+            <button onClick={initMaths} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
+          </div>)}
+        </div>)}
 
-            {/* Actions */}
-            <div style={{display:"flex",gap:10,marginBottom:10}}>
-              <button onClick={cbnClear} style={{flex:1,background:"rgba(30,58,95,0.07)",border:"1px solid rgba(30,58,95,0.1)",borderRadius:12,padding:"12px",color:NAVY,fontSize:13,cursor:"pointer"}}>Clear</button>
-              {cbnDone===cbnMainSecs.length&&cbnDone>0&&<div style={{flex:2,background:"linear-gradient(135deg,#22c55e,#06b6d4)",borderRadius:12,padding:"12px",textAlign:"center",color:"#fff",fontSize:13,fontWeight:700}}>🎉 Finished! Well done!</div>}
+        {game==="colour"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🎨 Colour by Number</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:12}}>Pick a colour number then tap a section to paint it.</div>
+          <div style={{marginBottom:12}}>
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>FREE SCENES</div>
+            <div style={{display:"flex",gap:6,marginBottom:10}}>{CBN_SCENES.filter(s=>s.free).map((s)=>{const idx=CBN_SCENES.indexOf(s);return(<button key={idx} onClick={()=>setCbnScene(idx)} style={{flex:1,background:cbnScene===idx?`${TEAL}15`:"#fff",border:`2px solid ${cbnScene===idx?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:12,padding:"8px 4px",cursor:"pointer"}}><div style={{fontSize:20,marginBottom:2}}>{s.emoji}</div><div style={{fontSize:10,fontWeight:700,color:cbnScene===idx?TEAL:NAVY}}>{s.name}</div></button>);})}</div>
+            <div style={{fontSize:10,color:GOLD,letterSpacing:1.5,marginBottom:8}}>✦ PREMIUM SCENES</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:6}}>{CBN_SCENES.filter(s=>!s.free).map((s)=>{const idx=CBN_SCENES.indexOf(s);return(<button key={idx} onClick={()=>premium?setCbnScene(idx):setModal(true)} style={{background:cbnScene===idx?`${WARM}15`:"rgba(201,146,10,0.05)",border:`2px solid ${cbnScene===idx?WARM:GOLD+"40"}`,borderRadius:12,padding:"8px 4px",cursor:"pointer",opacity:premium?1:0.75}}><div style={{fontSize:18,marginBottom:2}}>{s.emoji}</div><div style={{fontSize:9,fontWeight:700,color:cbnScene===idx?WARM:NAVY}}>{s.name}</div>{!premium&&<div style={{fontSize:8,color:GOLD}}>✦ Premium</div>}</button>);})}</div>
+          </div>
+          <div style={{...card({padding:"10px 14px",marginBottom:10,display:"flex",alignItems:"center",gap:10})}}>
+            <div style={{flex:1,background:"#e8eef4",borderRadius:8,height:8,overflow:"hidden"}}><div style={{width:`${cbnPct}%`,background:`linear-gradient(90deg,${TEAL},#22c55e)`,height:8,borderRadius:8,transition:"width 0.4s"}}/></div>
+            <div style={{fontSize:12,color:"#5a6a7a",whiteSpace:"nowrap"}}>{cbnDone}/{cbnMainSecs.length} · {cbnPct}%</div>
+          </div>
+          <div style={{...card({marginBottom:10,padding:"12px"})}}>
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>PICK A COLOUR NUMBER</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:4}}>{CBN_PALETTE.map(p=><button key={p.num} onClick={()=>setCbnPalette(p)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:cbnPalette.num===p.num?`${TEAL}18`:"transparent",border:`2px solid ${cbnPalette.num===p.num?TEAL:"rgba(30,58,95,0.08)"}`,borderRadius:10,padding:"5px 2px",cursor:"pointer"}}><div style={{width:24,height:24,borderRadius:"50%",background:p.color,border:p.color==="#ffffff"?"1px solid #bbb":"none"}}/><div style={{fontSize:10,fontWeight:700,color:cbnPalette.num===p.num?TEAL:NAVY}}>{p.num}</div></button>)}</div>
+            <div style={{marginTop:8,background:`${TEAL}10`,borderRadius:10,padding:"5px 10px",display:"flex",alignItems:"center",gap:6}}><div style={{width:16,height:16,borderRadius:"50%",background:cbnPalette.color,border:cbnPalette.color==="#ffffff"?"1px solid #bbb":"none",flexShrink:0}}/><div style={{fontSize:11,color:TEAL,fontWeight:600}}>#{cbnPalette.num} — {cbnPalette.name}</div></div>
+          </div>
+          <div style={{...card({marginBottom:10,padding:"10px"})}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5}}>TAP A SECTION TO COLOUR IT</div>
+              <button onClick={()=>setCbnShowNums(n=>!n)} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}25`,borderRadius:8,padding:"3px 8px",fontSize:9,color:TEAL,fontWeight:700,cursor:"pointer"}}>{cbnShowNums?"Hide #s":"Show #s"}</button>
             </div>
-
-            <div style={{...card({background:`${TEAL}08`,border:`1px solid ${TEAL}20`,padding:"12px"})}}>
-              <div style={{fontSize:11,color:TEAL,fontWeight:700,marginBottom:4}}>Why colouring helps after stroke</div>
-              <div style={{fontSize:11,color:"#3a4a5a",lineHeight:1.6}}>Colouring activates both brain hemispheres, reduces anxiety, and improves focus and fine motor control — all great for stroke recovery.</div>
-            </div>
+            <svg viewBox="0 0 280 280" style={{width:"100%",borderRadius:10,display:"block"}}>
+              {curScene.render(id=>cbnGetColor(cbnScene,id))}
+              {curScene.sections.map(s=><circle key={s.id} cx={s.cx} cy={s.cy} r={22} fill="transparent" stroke="transparent" style={{cursor:"pointer"}} onClick={()=>cbnPaint(s.id)}/>)}
+              {cbnShowNums&&curScene.sections.filter(s=>s.label!=="Sky"&&s.label!=="Grass"&&s.label!=="Branch").map(s=><text key={`n${s.id}`} x={s.cx} y={s.cy} fontSize="10" fontWeight="bold" fill="white" stroke={NAVY} strokeWidth="2.5" paintOrder="stroke" textAnchor="middle" dominantBaseline="middle" style={{pointerEvents:"none",userSelect:"none"}}>{s.id}</text>)}
+            </svg>
           </div>
-        )}
-
-        {/* STROOP */}
-        {game==="stroop"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🌈 Colour Word</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Name the INK COLOUR — not the word. Score: {stroopScore}/{stroopTotal}</div>
-            {!stroopItem&&!stroopDone&&<button onClick={()=>{initStroop();nextStroop();}} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start Challenge</button>}
-            {stroopItem&&!stroopDone&&(
-              <div style={{textAlign:"center"}}>
-                <div style={{...card({padding:"32px",marginBottom:20})}}>
-                  <div style={{fontSize:48,fontWeight:900,color:stroopItem.inkColor,letterSpacing:2}}>{stroopItem.word}</div>
-                  <div style={{fontSize:11,color:"#9aabb8",marginTop:8}}>What colour is the ink?</div>
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-                  {stroopItem.options.map(o=>(
-                    <button key={o.word} onClick={()=>answerStroop(o.word)} style={{padding:"14px",background:"#fff",border:`2px solid ${o.color}40`,borderRadius:14,fontSize:15,fontWeight:700,color:o.color,cursor:"pointer"}}>{o.word}</button>
-                  ))}
-                </div>
-                <div style={{fontSize:11,color:"#9aabb8",marginTop:12}}>{10-stroopTotal} questions remaining</div>
-              </div>
-            )}
-            {stroopDone&&(
-              <div style={{...card({textAlign:"center"})}}>
-                <div style={{fontSize:36,marginBottom:8}}>{stroopScore>=8?"🏆":stroopScore>=5?"👍":"💪"}</div>
-                <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{stroopScore}/10 Correct</div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>The Stroop task trains executive function and cognitive flexibility.</div>
-                <button onClick={()=>{initStroop();nextStroop();}} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
-              </div>
-            )}
+          <div style={{...card({marginBottom:10,padding:"12px"})}}>
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:8}}>SECTION GUIDE — tap to colour</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4}}>{cbnMainSecs.map(s=><button key={s.id} onClick={()=>cbnPaint(s.id)} style={{display:"flex",alignItems:"center",gap:6,background:cbnPainted[cbnKey(cbnScene,s.id)]?`${TEAL}08`:"rgba(30,58,95,0.02)",border:`1px solid ${cbnPainted[cbnKey(cbnScene,s.id)]?TEAL+"25":"rgba(30,58,95,0.07)"}`,borderRadius:8,padding:"5px 8px",cursor:"pointer",textAlign:"left"}}><div style={{width:14,height:14,borderRadius:"50%",background:cbnGetColor(cbnScene,s.id),border:"1px solid rgba(30,58,95,0.15)",flexShrink:0}}/><div style={{flex:1}}><span style={{fontSize:9,fontWeight:700,color:NAVY}}>#{s.id} </span><span style={{fontSize:8,color:"#5a6a7a"}}>{s.label}</span></div>{cbnPainted[cbnKey(cbnScene,s.id)]&&<span style={{fontSize:9,color:"#22c55e"}}>✓</span>}</button>)}</div>
           </div>
-        )}
-
-        {/* WORD RECOGNITION */}
-        {game==="wordrecog"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔤 Word Recognition</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Which one is spelled correctly? Score: {wrScore}/{WORD_RECOG_SETS.length}</div>
-            {!wrDone?(
-              <div style={{textAlign:"center"}}>
-                <div style={{fontSize:11,color:"#9aabb8",marginBottom:16}}>Question {wrIdx+1} of {WORD_RECOG_SETS.length}</div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                  {WORD_RECOG_SETS[wrIdx].options.map((o,i)=>(
-                    <button key={i} onClick={()=>!wrFeedback&&answerWordRecog(o)} style={{padding:"18px 10px",background:wrFeedback?(o===WORD_RECOG_SETS[wrIdx].word?"#dcfce7":"#fff"):"#fff",border:`2px solid ${wrFeedback&&o===WORD_RECOG_SETS[wrIdx].word?"#22c55e":TEAL}20`,borderRadius:14,fontSize:16,fontWeight:700,color:NAVY,cursor:"pointer",letterSpacing:1}}>{o}</button>
-                  ))}
-                </div>
-              </div>
-            ):(
-              <div style={{...card({textAlign:"center"})}}>
-                <div style={{fontSize:36,marginBottom:8}}>{wrScore>=4?"🏆":wrScore>=3?"👍":"💪"}</div>
-                <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{wrScore}/{WORD_RECOG_SETS.length} Correct</div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>Word recognition exercises rebuild language pathways affected by stroke.</div>
-                <button onClick={initWordRecog} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Try Again</button>
-              </div>
-            )}
+          <div style={{display:"flex",gap:10,marginBottom:10}}>
+            <button onClick={cbnClear} style={{flex:1,background:"rgba(30,58,95,0.07)",border:"1px solid rgba(30,58,95,0.1)",borderRadius:12,padding:"12px",color:NAVY,fontSize:13,cursor:"pointer"}}>Clear</button>
+            {cbnDone===cbnMainSecs.length&&cbnDone>0&&<div style={{flex:2,background:"linear-gradient(135deg,#22c55e,#06b6d4)",borderRadius:12,padding:"12px",textAlign:"center",color:"#fff",fontSize:13,fontWeight:700}}>🎉 Finished! Well done!</div>}
           </div>
-        )}
-
-        {/* NUMBER RECOGNITION */}
-        {game==="numrecog"&&(
-          <div>
-            <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔢 Number Recognition</div>
-            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Tap the number you see. Score: {numScore}/{numTotal}</div>
-            {!numQ&&!numDone&&<button onClick={initNumRecog} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start</button>}
-            {numQ&&!numDone&&(
-              <div style={{textAlign:"center"}}>
-                <div style={{...card({padding:"40px",marginBottom:24})}}>
-                  <div style={{fontSize:80,fontWeight:900,color:NAVY,lineHeight:1}}>{numQ.num}</div>
-                  <div style={{fontSize:11,color:"#9aabb8",marginTop:8}}>Tap this number below</div>
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
-                  {numQ.options.map((o,i)=>(
-                    <button key={i} onClick={()=>answerNum(o)} style={{padding:"20px",background:"#fff",border:`2px solid ${TEAL}25`,borderRadius:14,fontSize:28,fontWeight:700,color:NAVY,cursor:"pointer"}}>{o}</button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {numDone&&(
-              <div style={{...card({textAlign:"center"})}}>
-                <div style={{fontSize:36,marginBottom:8}}>{numScore>=8?"🏆":numScore>=5?"👍":"💪"}</div>
-                <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{numScore}/10 Correct</div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>Number recognition rebuilds numerical processing pathways in the brain.</div>
-                <button onClick={initNumRecog} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
-              </div>
-            )}
+          <div style={{...card({background:`${TEAL}08`,border:`1px solid ${TEAL}20`,padding:"12px"})}}>
+            <div style={{fontSize:11,color:TEAL,fontWeight:700,marginBottom:4}}>Why colouring helps after stroke</div>
+            <div style={{fontSize:11,color:"#3a4a5a",lineHeight:1.6}}>Colouring activates both brain hemispheres, reduces anxiety, and improves focus and fine motor control — all great for stroke recovery.</div>
           </div>
-        )}
+        </div>)}
 
-        {/* CATEGORY SORT placeholder */}
-        {game==="category"&&(
-          <div style={{...card({textAlign:"center",padding:"40px"})}}>
-            <div style={{fontSize:36,marginBottom:12}}>🗂️</div>
-            <div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:8}}>Category Sort</div>
-            <div style={{fontSize:13,color:"#5a6a7a",lineHeight:1.6}}>Coming soon — this game is being built and will be available in the next update.</div>
-          </div>
-        )}
+        {game==="stroop"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🌈 Colour Word</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Name the INK COLOUR — not the word. Score: {stroopScore}/{stroopTotal}</div>
+          {!stroopItem&&!stroopDone&&<button onClick={()=>{initStroop();nextStroop();}} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start Challenge</button>}
+          {stroopItem&&!stroopDone&&(<div style={{textAlign:"center"}}>
+            <div style={{...card({padding:"32px",marginBottom:20})}}><div style={{fontSize:48,fontWeight:900,color:stroopItem.inkColor,letterSpacing:2}}>{stroopItem.word}</div><div style={{fontSize:11,color:"#9aabb8",marginTop:8}}>What colour is the ink?</div></div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>{stroopItem.options.map(o=><button key={o.word} onClick={()=>answerStroop(o.word)} style={{padding:"14px",background:"#fff",border:`2px solid ${o.color}40`,borderRadius:14,fontSize:15,fontWeight:700,color:o.color,cursor:"pointer"}}>{o.word}</button>)}</div>
+            <div style={{fontSize:11,color:"#9aabb8",marginTop:12}}>{10-stroopTotal} questions remaining</div>
+          </div>)}
+          {stroopDone&&(<div style={{...card({textAlign:"center"})}}>
+            <div style={{fontSize:36,marginBottom:8}}>{stroopScore>=8?"🏆":stroopScore>=5?"👍":"💪"}</div>
+            <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{stroopScore}/10 Correct</div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>The Stroop task trains executive function and cognitive flexibility.</div>
+            <button onClick={()=>{initStroop();nextStroop();}} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
+          </div>)}
+        </div>)}
 
-        {/* VISUAL TRAIL placeholder */}
-        {game==="trail"&&(
-          <div style={{...card({textAlign:"center",padding:"40px"})}}>
-            <div style={{fontSize:36,marginBottom:12}}>👁️</div>
-            <div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:8}}>Visual Trail</div>
-            <div style={{fontSize:13,color:"#5a6a7a",lineHeight:1.6}}>Coming soon — this game is being built and will be available in the next update.</div>
-          </div>
-        )}
+        {game==="wordrecog"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔤 Word Recognition</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Which one is spelled correctly? Score: {wrScore}/{WORD_RECOG_SETS.length}</div>
+          {!wrDone?(<div style={{textAlign:"center"}}>
+            <div style={{fontSize:11,color:"#9aabb8",marginBottom:16}}>Question {wrIdx+1} of {WORD_RECOG_SETS.length}</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>{WORD_RECOG_SETS[wrIdx].options.map((o,i)=><button key={i} onClick={()=>!wrFeedback&&answerWordRecog(o)} style={{padding:"18px 10px",background:wrFeedback?(o===WORD_RECOG_SETS[wrIdx].word?"#dcfce7":"#fff"):"#fff",border:`2px solid ${wrFeedback&&o===WORD_RECOG_SETS[wrIdx].word?"#22c55e":TEAL}20`,borderRadius:14,fontSize:16,fontWeight:700,color:NAVY,cursor:"pointer",letterSpacing:1}}>{o}</button>)}</div>
+          </div>):(<div style={{...card({textAlign:"center"})}}>
+            <div style={{fontSize:36,marginBottom:8}}>{wrScore>=4?"🏆":wrScore>=3?"👍":"💪"}</div>
+            <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{wrScore}/{WORD_RECOG_SETS.length} Correct</div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>Word recognition exercises rebuild language pathways affected by stroke.</div>
+            <button onClick={initWordRecog} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Try Again</button>
+          </div>)}
+        </div>)}
+
+        {game==="numrecog"&&(<div>
+          <div style={{fontSize:22,fontWeight:700,color:NAVY,marginBottom:4}}>🔢 Number Recognition</div>
+          <div style={{fontSize:13,color:"#5a6a7a",marginBottom:16}}>Tap the number you see. Score: {numScore}/{numTotal}</div>
+          {!numQ&&!numDone&&<button onClick={initNumRecog} style={{width:"100%",background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>Start</button>}
+          {numQ&&!numDone&&(<div style={{textAlign:"center"}}>
+            <div style={{...card({padding:"40px",marginBottom:24})}}><div style={{fontSize:80,fontWeight:900,color:NAVY,lineHeight:1}}>{numQ.num}</div><div style={{fontSize:11,color:"#9aabb8",marginTop:8}}>Tap this number below</div></div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>{numQ.options.map((o,i)=><button key={i} onClick={()=>answerNum(o)} style={{padding:"20px",background:"#fff",border:`2px solid ${TEAL}25`,borderRadius:14,fontSize:28,fontWeight:700,color:NAVY,cursor:"pointer"}}>{o}</button>)}</div>
+          </div>)}
+          {numDone&&(<div style={{...card({textAlign:"center"})}}>
+            <div style={{fontSize:36,marginBottom:8}}>{numScore>=8?"🏆":numScore>=5?"👍":"💪"}</div>
+            <div style={{fontSize:22,fontWeight:700,color:NAVY}}>{numScore}/10 Correct</div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginTop:6,marginBottom:16}}>Number recognition rebuilds numerical processing pathways in the brain.</div>
+            <button onClick={initNumRecog} style={{background:`linear-gradient(135deg,${TEAL},${NAVY})`,border:"none",borderRadius:12,padding:"11px 28px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>Play Again</button>
+          </div>)}
+        </div>)}
+
+        {game==="category"&&(<div style={{...card({textAlign:"center",padding:"40px"})}}><div style={{fontSize:36,marginBottom:12}}>🗂️</div><div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:8}}>Category Sort</div><div style={{fontSize:13,color:"#5a6a7a",lineHeight:1.6}}>Coming soon — this game is being built and will be available in the next update.</div></div>)}
+        {game==="trail"&&(<div style={{...card({textAlign:"center",padding:"40px"})}}><div style={{fontSize:36,marginBottom:12}}>👁️</div><div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:8}}>Visual Trail</div><div style={{fontSize:13,color:"#5a6a7a",lineHeight:1.6}}>Coming soon — this game is being built and will be available in the next update.</div></div>)}
       </div>
     );
   }
-
-  /* ══ MAIN APP ══ */
-  return (
+  return(
     <div style={{minHeight:"100vh",background:BG,fontFamily:"Georgia,serif",color:NAVY,position:"relative",overflowX:"hidden"}}>
-      <style>{`
-        @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-        button:active{opacity:0.85}
-        ::-webkit-scrollbar{width:0}
-      `}</style>
+      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}button:active{opacity:0.85}::-webkit-scrollbar{width:0}`}</style>
 
-      {/* ONBOARDING */}
       {!onboarded&&(
         <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"40px 24px"}}>
           <div style={{textAlign:"center",maxWidth:380,width:"100%",animation:"fadeUp 0.7s ease both"}}>
@@ -1182,307 +936,221 @@ export default function StrokeWise() {
                 <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
               ))}
             </div>
-            <div style={{background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:14,padding:"12px 16px",fontSize:12,color:"#b91c1c",lineHeight:1.6}}>
-              StrokeWise is for education and support only. Always follow your medical team's advice.
-            </div>
+            <div style={{background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.25)",borderRadius:14,padding:"12px 16px",fontSize:12,color:"#b91c1c",lineHeight:1.6}}>StrokeWise is for education and support only. Always follow your medical team's advice.</div>
           </div>
         </div>
       )}
 
-      {/* MAIN */}
-      {onboarded&&(
-        <>
-          {/* Header */}
-          <div style={{padding:"50px 20px 14px",display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(248,244,239,0.94)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(30,58,95,0.07)",position:"sticky",top:0,zIndex:40}}>
-            <div>
-              <div style={{fontSize:10,letterSpacing:3,color:TEAL,textTransform:"uppercase"}}>{userType==="survivor"?"Stroke Survivor":"Caregiver"} Mode</div>
-              <div style={{fontSize:22,fontWeight:700,color:NAVY}}>StrokeWise</div>
+      {onboarded&&(<>
+        <div style={{padding:"50px 20px 14px",display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(248,244,239,0.94)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(30,58,95,0.07)",position:"sticky",top:0,zIndex:40}}>
+          <div>
+            <div style={{fontSize:10,letterSpacing:3,color:TEAL,textTransform:"uppercase"}}>{userType==="survivor"?"Stroke Survivor":"Caregiver"} Mode</div>
+            <div style={{fontSize:22,fontWeight:700,color:NAVY}}>StrokeWise</div>
+          </div>
+          {!premium?<button onClick={()=>setModal(true)} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:20,padding:"6px 14px",color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer"}}>✦ Premium</button>:<div style={{fontSize:11,color:WARM,letterSpacing:1,fontWeight:700}}>✦ PREMIUM</div>}
+        </div>
+
+        <div style={{padding:"16px 20px 90px"}}>
+          {screen==="home"&&(<div style={{opacity:fadeIn?1:0,transition:"opacity 0.6s"}}>
+            <div style={{...card({marginBottom:14,padding:"12px 14px"})}}>
+              <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>I AM A…</div>
+              <div style={{display:"flex",gap:8}}>
+                {[{t:"Stroke Survivor",e:"🧠",v:"survivor"},{t:"Caregiver / Family",e:"❤️",v:"caregiver"}].map(u=>(
+                  <button key={u.v} onClick={()=>setUserType(u.v)} style={{flex:1,background:userType===u.v?`${TEAL}15`:"rgba(255,255,255,0.5)",border:`2px solid ${userType===u.v?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:14,padding:"10px 8px",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                    <div style={{fontSize:20,marginBottom:4}}>{u.e}</div>
+                    <div style={{fontSize:11,fontWeight:700,color:userType===u.v?TEAL:NAVY,lineHeight:1.3}}>{u.t}</div>
+                  </button>
+                ))}
+              </div>
             </div>
-            {!premium
-              ?<button onClick={()=>setModal(true)} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:20,padding:"6px 14px",color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer"}}>✦ Premium</button>
-              :<div style={{fontSize:11,color:WARM,letterSpacing:1,fontWeight:700}}>✦ PREMIUM</div>
-            }
-          </div>
-
-          <div style={{padding:"16px 20px 90px"}}>
-
-            {/* HOME */}
-            {screen==="home"&&(
-              <div style={{opacity:fadeIn?1:0,transition:"opacity 0.6s"}}>
-                {/* Profile switcher */}
-                <div style={{...card({marginBottom:14,padding:"12px 14px"})}}>
-                  <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>I AM A…</div>
-                  <div style={{display:"flex",gap:8}}>
-                    {[{t:"Stroke Survivor",e:"🧠",v:"survivor"},{t:"Caregiver / Family",e:"❤️",v:"caregiver"}].map(u=>(
-                      <button key={u.v} onClick={()=>setUserType(u.v)} style={{flex:1,background:userType===u.v?`${TEAL}15`:"rgba(255,255,255,0.5)",border:`2px solid ${userType===u.v?TEAL:"rgba(30,58,95,0.1)"}`,borderRadius:14,padding:"10px 8px",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
-                        <div style={{fontSize:20,marginBottom:4}}>{u.e}</div>
-                        <div style={{fontSize:11,fontWeight:700,color:userType===u.v?TEAL:NAVY,lineHeight:1.3}}>{u.t}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                {/* Trust badges */}
-                <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:14,flexWrap:"wrap"}}>
-                  {["🚫 No ads","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
-                    <div key={b} style={{background:`${TEAL}10`,border:`1px solid ${TEAL}25`,borderRadius:20,padding:"3px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
-                  ))}
-                </div>
-                <div style={{...card({background:`linear-gradient(135deg,${NAVY},${TEAL})`,color:"#fff",marginBottom:14,padding:"20px"})}}>
-                  <div style={{fontSize:9,letterSpacing:2.5,opacity:0.7,marginBottom:8}}>TODAY'S REMINDER</div>
-                  <div style={{fontSize:15,lineHeight:1.65,fontStyle:"italic"}}>"{AFFIRMATIONS[affIdx]}"</div>
-                </div>
-                <div style={{...card({background:"rgba(239,68,68,0.06)",border:"1px solid rgba(239,68,68,0.2)",marginBottom:14,padding:"14px 16px"})}}>
-                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                    <div>
-                      <div style={{fontSize:12,fontWeight:700,color:"#dc2626"}}>Know the FAST signs</div>
-                      <div style={{fontSize:11,color:"#7f1d1d",marginTop:2}}>Can save a life — including yours</div>
-                    </div>
-                    <button onClick={()=>setScreen("fast")} style={{background:"#dc2626",border:"none",borderRadius:10,padding:"7px 12px",color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer"}}>Review</button>
-                  </div>
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
-                  {[
-                    {e:"📚",t:"Learn",         s:userType==="caregiver"?"Caregiver & stroke topics":"Education topics", scr:"learn",     c:TEAL},
-                    {e:"🧩",t:"Brain Training", s:"Daily exercises",                                                     scr:"brain",     c:WARM},
-                    {e:"🆘",t:"Emergency",      s:"Worldwide numbers",                                                   scr:"emergency", c:"#dc2626"},
-                    {e:"⚡",t:"FAST Signs",     s:"Stroke symptoms",                                                     scr:"fast",      c:GOLD},
-                  ].map(a=>(
-                    <button key={a.t} onClick={()=>setScreen(a.scr)} style={{...card({padding:"16px 14px",border:`1px solid ${a.c}20`,background:`${a.c}08`,cursor:"pointer",textAlign:"left"})}}>
-                      <div style={{fontSize:26,marginBottom:6}}>{a.e}</div>
-                      <div style={{fontSize:13,fontWeight:700,color:a.c}}>{a.t}</div>
-                      <div style={{fontSize:10,color:"#5a6a7a",marginTop:2}}>{a.s}</div>
-                    </button>
-                  ))}
-                </div>
-                {userType==="caregiver"&&(
-                  <div style={{...card({background:`${WARM}08`,border:`1px solid ${WARM}20`,padding:"14px 16px"})}}>
-                    <div style={{fontSize:11,fontWeight:700,color:WARM,marginBottom:4}}>Caregiver tip</div>
-                    <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.65}}>You cannot pour from an empty cup. Schedule at least 15 minutes today that are entirely for you.</div>
-                  </div>
-                )}
+            <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+              {["🚫 No ads","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
+                <div key={b} style={{background:`${TEAL}10`,border:`1px solid ${TEAL}25`,borderRadius:20,padding:"3px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
+              ))}
+            </div>
+            <div style={{...card({background:`linear-gradient(135deg,${NAVY},${TEAL})`,color:"#fff",marginBottom:14,padding:"20px"})}}>
+              <div style={{fontSize:9,letterSpacing:2.5,opacity:0.7,marginBottom:8}}>TODAY'S REMINDER</div>
+              <div style={{fontSize:15,lineHeight:1.65,fontStyle:"italic"}}>"{AFFIRMATIONS[affIdx]}"</div>
+            </div>
+            <div style={{...card({background:"rgba(239,68,68,0.06)",border:"1px solid rgba(239,68,68,0.2)",marginBottom:14,padding:"14px 16px"})}}>
+              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                <div><div style={{fontSize:12,fontWeight:700,color:"#dc2626"}}>Know the FAST signs</div><div style={{fontSize:11,color:"#7f1d1d",marginTop:2}}>Can save a life — including yours</div></div>
+                <button onClick={()=>setScreen("fast")} style={{background:"#dc2626",border:"none",borderRadius:10,padding:"7px 12px",color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer"}}>Review</button>
               </div>
-            )}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+              {[{e:"📚",t:"Learn",s:userType==="caregiver"?"Caregiver & stroke topics":"Education topics",scr:"learn",c:TEAL},{e:"🧩",t:"Brain Training",s:"Daily exercises",scr:"brain",c:WARM},{e:"🆘",t:"Emergency",s:"Worldwide numbers",scr:"emergency",c:"#dc2626"},{e:"⚡",t:"FAST Signs",s:"Stroke symptoms",scr:"fast",c:GOLD}].map(a=>(
+                <button key={a.t} onClick={()=>setScreen(a.scr)} style={{...card({padding:"16px 14px",border:`1px solid ${a.c}20`,background:`${a.c}08`,cursor:"pointer",textAlign:"left"})}}>
+                  <div style={{fontSize:26,marginBottom:6}}>{a.e}</div>
+                  <div style={{fontSize:13,fontWeight:700,color:a.c}}>{a.t}</div>
+                  <div style={{fontSize:10,color:"#5a6a7a",marginTop:2}}>{a.s}</div>
+                </button>
+              ))}
+            </div>
+            {userType==="caregiver"&&(<div style={{...card({background:`${WARM}08`,border:`1px solid ${WARM}20`,padding:"14px 16px"})}}>
+              <div style={{fontSize:11,fontWeight:700,color:WARM,marginBottom:4}}>Caregiver tip</div>
+              <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.65}}>You cannot pour from an empty cup. Schedule at least 15 minutes today that are entirely for you.</div>
+            </div>)}
+          </div>)}
 
-            {/* FAST */}
-            {screen==="fast"&&(
-              <div>
-                <div style={{...card({background:"#dc2626",color:"#fff",textAlign:"center",marginBottom:16,padding:"20px"})}}>
-                  <div style={{fontSize:22,marginBottom:6}}>ACT FAST</div>
-                  <div style={{fontSize:13,opacity:0.9,lineHeight:1.6}}>If you suspect a stroke, call emergency services immediately. Every minute counts — 1.9 million brain cells die every minute during a stroke.</div>
-                </div>
-                {FAST_SIGNS.map(s=>(
-                  <div key={s.letter} style={{...card({marginBottom:12,padding:"16px",border:`2px solid ${s.color}30`,background:`${s.color}06`})}}>
-                    <div style={{display:"flex",alignItems:"flex-start",gap:14}}>
-                      <div style={{width:48,height:48,borderRadius:14,background:s.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,fontWeight:900,color:"#fff",flexShrink:0}}>{s.letter}</div>
-                      <div style={{flex:1}}>
-                        <div style={{fontSize:15,fontWeight:700,color:s.color,marginBottom:4}}>{s.word}</div>
-                        <div style={{fontSize:13,color:"#3a4a5a",lineHeight:1.6,marginBottom:6}}>{s.desc}</div>
-                        <div style={{background:`${s.color}15`,borderRadius:8,padding:"6px 10px",fontSize:11,color:s.color,fontWeight:600}}>{s.action}</div>
-                      </div>
-                    </div>
+          {screen==="fast"&&(<div>
+            <div style={{...card({background:"#dc2626",color:"#fff",textAlign:"center",marginBottom:16,padding:"20px"})}}>
+              <div style={{fontSize:22,marginBottom:6}}>ACT FAST</div>
+              <div style={{fontSize:13,opacity:0.9,lineHeight:1.6}}>If you suspect a stroke, call emergency services immediately. Every minute counts — 1.9 million brain cells die every minute during a stroke.</div>
+            </div>
+            {FAST_SIGNS.map(s=>(
+              <div key={s.letter} style={{...card({marginBottom:12,padding:"16px",border:`2px solid ${s.color}30`,background:`${s.color}06`})}}>
+                <div style={{display:"flex",alignItems:"flex-start",gap:14}}>
+                  <div style={{width:48,height:48,borderRadius:14,background:s.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,fontWeight:900,color:"#fff",flexShrink:0}}>{s.letter}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:15,fontWeight:700,color:s.color,marginBottom:4}}>{s.word}</div>
+                    <div style={{fontSize:13,color:"#3a4a5a",lineHeight:1.6,marginBottom:6}}>{s.desc}</div>
+                    <div style={{background:`${s.color}15`,borderRadius:8,padding:"6px 10px",fontSize:11,color:s.color,fontWeight:600}}>{s.action}</div>
                   </div>
-                ))}
-                <div style={{...card({marginBottom:12})}}>
-                  <div style={{fontSize:12,fontWeight:700,color:NAVY,marginBottom:10}}>OTHER WARNING SIGNS</div>
-                  {OTHER_SIGNS.map(o=>(
-                    <div key={o.sign} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"8px 0",borderBottom:"1px solid rgba(30,58,95,0.06)"}}>
-                      <span style={{fontSize:18,flexShrink:0}}>{o.icon}</span>
-                      <span style={{fontSize:13,color:"#3a4a5a",lineHeight:1.5}}>{o.sign}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{...card({background:"rgba(239,68,68,0.06)",border:"1px solid rgba(239,68,68,0.2)",textAlign:"center",padding:"16px"})}}>
-                  <div style={{fontSize:13,fontWeight:700,color:"#dc2626",marginBottom:4}}>Time is Brain</div>
-                  <div style={{fontSize:12,color:"#7f1d1d",lineHeight:1.6}}>Clot-busting treatment must be given within 4.5 hours of symptom onset. The sooner treatment begins, the better the outcome.</div>
-                  <button onClick={()=>setScreen("emergency")} style={{marginTop:12,background:"#dc2626",border:"none",borderRadius:12,padding:"10px 24px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>View Emergency Numbers</button>
                 </div>
               </div>
-            )}
-
-            {/* LEARN */}
-            {screen==="learn"&&(
-              <div>
-                {userType==="caregiver"&&(
-                  <div style={{marginBottom:16}}>
-                    <div style={{fontSize:10,color:WARM,letterSpacing:1.5,marginBottom:10,fontWeight:700}}>CAREGIVER RESOURCES</div>
-                    {CAREGIVER_TOPICS.map((e,i)=>(
-                      <button key={i} onClick={()=>setEduIdx(-(i+1))} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left",border:`1px solid ${WARM}20`,background:`${WARM}05`})}}>
-                        <div style={{fontSize:28,flexShrink:0}}>{e.icon}</div>
-                        <div style={{flex:1}}>
-                          <div style={{fontSize:14,fontWeight:700,color:WARM}}>{e.title}</div>
-                          <div style={{fontSize:11,color:"#5a6a7a",marginTop:2,lineHeight:1.4}}>{e.content.slice(0,65)}…</div>
-                        </div>
-                        <div style={{fontSize:18,color:"#9aabb8"}}>›</div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>STROKE EDUCATION</div>
-                {EDUCATION.map((e,i)=>(
-                  <button key={i} onClick={()=>setEduIdx(i)} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left"})}}>
-                    <div style={{fontSize:28,flexShrink:0}}>{e.icon}</div>
-                    <div style={{flex:1}}>
-                      <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{e.title}</div>
-                      <div style={{fontSize:11,color:"#5a6a7a",marginTop:2,lineHeight:1.4}}>{e.content.slice(0,70)}…</div>
-                    </div>
-                    <div style={{fontSize:18,color:"#9aabb8"}}>›</div>
-                  </button>
-                ))}
-                <div style={{...card({background:`${GOLD}0d`,border:`1px dashed ${GOLD}40`,marginTop:4,padding:"14px 16px"})}}>
-                  <div style={{fontSize:11,color:GOLD,fontWeight:700,marginBottom:6}}>✦ PREMIUM — More Resources</div>
-                  <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.7,marginBottom:10,whiteSpace:"pre-line"}}>
-                    {userType==="caregiver"
-                      ?"• Respite care planning guide\n• Medication management tracker\n• Weekly caregiver wellbeing check-in\n• Downloadable caregiver daily log sheets\n• How to talk to children about stroke"
-                      :"• Downloadable recovery tracking sheets\n• Weekly expert newsletter\n• Medication interaction checker\n• Personalised recovery milestones\n• Video exercise library"}
-                  </div>
-                  <button onClick={()=>setModal(true)} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:12,padding:"10px 20px",color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer"}}>Unlock Premium</button>
+            ))}
+            <div style={{...card({marginBottom:12})}}>
+              <div style={{fontSize:12,fontWeight:700,color:NAVY,marginBottom:10}}>OTHER WARNING SIGNS</div>
+              {OTHER_SIGNS.map(o=>(
+                <div key={o.sign} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"8px 0",borderBottom:"1px solid rgba(30,58,95,0.06)"}}>
+                  <span style={{fontSize:18,flexShrink:0}}>{o.icon}</span>
+                  <span style={{fontSize:13,color:"#3a4a5a",lineHeight:1.5}}>{o.sign}</span>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+            <div style={{...card({background:"rgba(239,68,68,0.06)",border:"1px solid rgba(239,68,68,0.2)",textAlign:"center",padding:"16px"})}}>
+              <div style={{fontSize:13,fontWeight:700,color:"#dc2626",marginBottom:4}}>Time is Brain</div>
+              <div style={{fontSize:12,color:"#7f1d1d",lineHeight:1.6}}>Clot-busting treatment must be given within 4.5 hours of symptom onset. The sooner treatment begins, the better the outcome.</div>
+              <button onClick={()=>setScreen("emergency")} style={{marginTop:12,background:"#dc2626",border:"none",borderRadius:12,padding:"10px 24px",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer"}}>View Emergency Numbers</button>
+            </div>
+          </div>)}
 
-            {/* BRAIN TRAINING */}
-            {screen==="brain"&&(
-              <div>
-                <div style={{fontSize:13,color:"#5a6a7a",marginBottom:6,lineHeight:1.6}}>Regular cognitive exercise supports neuroplasticity — your brain's ability to rewire and recover. Aim for 10–15 minutes daily.</div>
-                <div style={{...card({background:`${TEAL}0d`,border:`1px solid ${TEAL}25`,marginBottom:16,padding:"12px 14px"})}}>
-                  <div style={{fontSize:11,color:TEAL,fontWeight:700}}>Why brain training helps after stroke</div>
-                  <div style={{fontSize:11,color:"#3a4a5a",marginTop:4,lineHeight:1.6}}>The brain can form new neural pathways through neuroplasticity. Targeted exercises help rebuild connections affected by stroke.</div>
-                </div>
-                <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>FREE EXERCISES</div>
-                {BRAIN_FREE.map(g=>(
-                  <button key={g.id} onClick={()=>{
-                    if(g.id==="memory")initMemory();
-                    if(g.id==="wordrecall"){setWrPhase("study");setWrAnswers([]);setWrInput("");}
-                    if(g.id==="pattern"){setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(3);}
-                    if(g.id==="maths"){setMathQ(null);setMathScore(0);setMathTotal(0);setMathDone(false);}
-                    if(g.id==="colour"){setCbnScene(0);setCbnPalette(CBN_PALETTE[0]);}
-                    setGame(g.id);
-                  }} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left"})}}>
-                    <div style={{fontSize:30,flexShrink:0}}>{g.icon}</div>
-                    <div style={{flex:1}}>
-                      <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{g.name}</div>
-                      <div style={{fontSize:11,color:"#5a6a7a",marginTop:2}}>{g.desc}</div>
-                    </div>
-                    <div style={{background:`${TEAL}15`,borderRadius:8,padding:"3px 8px",fontSize:9,color:TEAL,fontWeight:700}}>{g.diff}</div>
-                  </button>
-                ))}
-                <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10,marginTop:6}}>PREMIUM EXERCISES ✦</div>
-                {BRAIN_PREMIUM.map(g=>(
-                  <button key={g.id} onClick={()=>gate(()=>{
-                    if(g.id==="stroop"){setStroopScore(0);setStroopTotal(0);setStroopDone(false);setStroopItem(null);}
-                    if(g.id==="wordrecog")initWordRecog();
-                    if(g.id==="numrecog")initNumRecog();
-                    setGame(g.id);
-                  })} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left",opacity:premium?1:0.7})}}>
-                    <div style={{fontSize:30,flexShrink:0}}>{g.icon}</div>
-                    <div style={{flex:1}}>
-                      <div style={{display:"flex",alignItems:"center",gap:6}}>
-                        <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{g.name}</div>
-                        {!premium&&<span style={{fontSize:9,color:GOLD,fontWeight:700}}>✦</span>}
-                      </div>
-                      <div style={{fontSize:11,color:"#5a6a7a",marginTop:2}}>{g.desc}</div>
-                    </div>
-                    <div style={{background:`${WARM}15`,borderRadius:8,padding:"3px 8px",fontSize:9,color:WARM,fontWeight:700}}>{g.diff}</div>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* EMERGENCY */}
-            {screen==="emergency"&&(
-              <div>
-                <div style={{...card({background:"#dc2626",color:"#fff",textAlign:"center",marginBottom:16,padding:"18px"})}}>
-                  <div style={{fontSize:22,marginBottom:6}}>Emergency Numbers</div>
-                  <div style={{fontSize:13,opacity:0.9,lineHeight:1.5}}>If you suspect a stroke, call emergency services immediately. State: "I think someone is having a stroke."</div>
-                </div>
-                {EMERGENCY.map(e=>(
-                  <div key={e.country} style={{...card({marginBottom:8,padding:"12px 14px",display:"flex",alignItems:"center",gap:12})}}>
-                    <div style={{fontSize:24,flexShrink:0}}>{e.emoji}</div>
-                    <div style={{flex:1}}>
-                      <div style={{fontSize:13,fontWeight:700,color:NAVY}}>{e.country}</div>
-                      <div style={{fontSize:16,fontWeight:900,color:"#dc2626",marginTop:1}}>{e.number}</div>
-                      {e.alt&&<div style={{fontSize:10,color:"#5a6a7a",marginTop:1}}>Also: {e.alt}</div>}
-                    </div>
-                    <a href={`tel:${e.number.replace(/\s/g,"")}`} style={{background:"rgba(220,38,38,0.1)",border:"1px solid rgba(220,38,38,0.3)",borderRadius:10,padding:"6px 12px",color:"#dc2626",fontSize:11,fontWeight:700,textDecoration:"none",flexShrink:0}}>Call</a>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Bottom Nav */}
-          <div style={{position:"fixed",bottom:0,left:0,right:0,background:"rgba(248,244,239,0.97)",backdropFilter:"blur(16px)",borderTop:"1px solid rgba(30,58,95,0.09)",display:"flex",zIndex:50}}>
-            {NAV.map(tab=>(
-              <button key={tab.id} onClick={()=>setScreen(tab.id)} style={{flex:1,padding:"10px 0 14px",border:"none",background:"transparent",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
-                <span style={{fontSize:18}}>{tab.icon}</span>
-                <span style={{fontSize:9,color:screen===tab.id?TEAL:"#9aabb8",fontFamily:"Georgia,serif",fontWeight:screen===tab.id?700:400,letterSpacing:0.5}}>{tab.id==="fast"?"FAST":tab.id==="brain"?"Brain":tab.id.charAt(0).toUpperCase()+tab.id.slice(1)}</span>
-                {screen===tab.id&&<div style={{width:4,height:4,borderRadius:"50%",background:TEAL}}/>}
+          {screen==="learn"&&(<div>
+            {userType==="caregiver"&&(<div style={{marginBottom:16}}>
+              <div style={{fontSize:10,color:WARM,letterSpacing:1.5,marginBottom:10,fontWeight:700}}>CAREGIVER RESOURCES</div>
+              {CAREGIVER_TOPICS.map((e,i)=>(
+                <button key={i} onClick={()=>setEduIdx(-(i+1))} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left",border:`1px solid ${WARM}20`,background:`${WARM}05`})}}>
+                  <div style={{fontSize:28,flexShrink:0}}>{e.icon}</div>
+                  <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700,color:WARM}}>{e.title}</div><div style={{fontSize:11,color:"#5a6a7a",marginTop:2,lineHeight:1.4}}>{e.content.slice(0,65)}…</div></div>
+                  <div style={{fontSize:18,color:"#9aabb8"}}>›</div>
+                </button>
+              ))}
+            </div>)}
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>STROKE EDUCATION</div>
+            {EDUCATION.map((e,i)=>(
+              <button key={i} onClick={()=>setEduIdx(i)} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left"})}}>
+                <div style={{fontSize:28,flexShrink:0}}>{e.icon}</div>
+                <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700,color:NAVY}}>{e.title}</div><div style={{fontSize:11,color:"#5a6a7a",marginTop:2,lineHeight:1.4}}>{e.content.slice(0,70)}…</div></div>
+                <div style={{fontSize:18,color:"#9aabb8"}}>›</div>
               </button>
             ))}
-          </div>
-
-          {/* Premium Modal */}
-          {modal&&(
-            <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",display:"flex",alignItems:"center",zIndex:200}} onClick={()=>setModal(false)}>
-              <div style={{background:"linear-gradient(160deg,#fff,#f8f4ef)",borderRadius:"26px 26px 0 0",padding:"28px 24px 44px",width:"100%",border:"1px solid rgba(30,58,95,0.1)",boxSizing:"border-box",maxHeight:"85vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
-                <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:16,flexWrap:"wrap"}}>
-                  {["🚫 No ads ever","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
-                    <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
-                  ))}
-                </div>
-                <div style={{textAlign:"center",marginBottom:16}}>
-                  <div style={{fontSize:30,marginBottom:6}}>✦</div>
-                  <div style={{fontSize:22,fontWeight:700,color:NAVY}}>StrokeWise Premium</div>
-                  <div style={{fontSize:13,color:"#5a6a7a",marginTop:4}}>The complete recovery companion</div>
-                </div>
-                {[
-                  "Colour Word (Stroop) attention training",
-                  "Word Recognition — language recovery",
-                  "Number Recognition — numerical cognition",
-                  "Category Sort — executive function",
-                  "Visual Trail — processing speed",
-                  "9 premium Colour by Number scenes (roses, birds, houses & more)",
-                  "Downloadable recovery tracking sheets",
-                  "Weekly expert stroke recovery newsletter",
-                  "Medication & lifestyle interaction guide",
-                  "Personalised recovery milestone tracker",
-                  "Zero ads or pop-ups — ever",
-                ].map(f=>(
-                  <div key={f} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:"1px solid rgba(30,58,95,0.06)"}}>
-                    <span style={{color:TEAL,fontSize:13}}>✓</span>
-                    <span style={{fontSize:13,color:"#3a4a5a"}}>{f}</span>
-                  </div>
-                ))}
-                <div style={{display:"flex",gap:8,marginTop:18,marginBottom:10}}>
-                  {[{label:"Monthly",price:"$7.99/mo",sub:"flexible"},{label:"Annual",price:"$44.99/yr",sub:"save 53%"}].map(pl=>{
-                    const sel = selPlan===pl.label;
-                    return (
-                      <button key={pl.label} onClick={()=>setSelPlan(pl.label)} style={{flex:1,background:sel?`${TEAL}20`:"rgba(30,58,95,0.05)",border:`2px solid ${sel?TEAL:"rgba(30,58,95,0.12)"}`,borderRadius:14,padding:"10px 6px",textAlign:"center",cursor:"pointer"}}>
-                        <div style={{fontSize:10,color:"#9aabb8",marginBottom:3}}>{pl.label}</div>
-                        <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{pl.price}</div>
-                        <div style={{fontSize:9,color:sel?TEAL:"#9aabb8",marginTop:2}}>{pl.sub}</div>
-                      </button>
-                    );
-                  })}
-                </div>
-                <button
-                  onClick={()=>{
-                    alert("Premium payments are coming very soon! Thank you for your interest — the free version has everything you need to get started.");
-                  }}
-                  style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",marginBottom:10}}
-                >
-                  Start Free 7-Day Trial
-                </button>
-                <button onClick={()=>setModal(false)} style={{width:"100%",background:"rgba(30,58,95,0.05)",border:"1px solid rgba(30,58,95,0.08)",borderRadius:16,padding:"11px",color:"#5a6a7a",fontSize:13,cursor:"pointer"}}>Maybe later</button>
-                <div style={{textAlign:"center",marginTop:12,fontSize:11,color:"#9aabb8",lineHeight:1.7}}>
-                  🚫 No ads or pop-ups — not now, not ever<br/>
-                  ✓ Free for 7 days — cancel anytime before being charged
-                </div>
-              </div>
+            <div style={{...card({background:`${GOLD}0d`,border:`1px dashed ${GOLD}40`,marginTop:4,padding:"14px 16px"})}}>
+              <div style={{fontSize:11,color:GOLD,fontWeight:700,marginBottom:6}}>✦ PREMIUM — More Resources</div>
+              <div style={{fontSize:12,color:"#5a6a7a",lineHeight:1.7,marginBottom:10,whiteSpace:"pre-line"}}>{userType==="caregiver"?"• Respite care planning guide\n• Medication management tracker\n• Weekly caregiver wellbeing check-in\n• Downloadable caregiver daily log sheets\n• How to talk to children about stroke":"• Downloadable recovery tracking sheets\n• Weekly expert newsletter\n• Medication interaction checker\n• Personalised recovery milestones\n• Video exercise library"}</div>
+              <button onClick={()=>setModal(true)} style={{background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:12,padding:"10px 20px",color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer"}}>Unlock Premium</button>
             </div>
-          )}
-        </>
-      )}
+          </div>)}
+
+          {screen==="brain"&&(<div>
+            <div style={{fontSize:13,color:"#5a6a7a",marginBottom:6,lineHeight:1.6}}>Regular cognitive exercise supports neuroplasticity — your brain's ability to rewire and recover. Aim for 10–15 minutes daily.</div>
+            <div style={{...card({background:`${TEAL}0d`,border:`1px solid ${TEAL}25`,marginBottom:16,padding:"12px 14px"})}}>
+              <div style={{fontSize:11,color:TEAL,fontWeight:700}}>Why brain training helps after stroke</div>
+              <div style={{fontSize:11,color:"#3a4a5a",marginTop:4,lineHeight:1.6}}>The brain can form new neural pathways through neuroplasticity. Targeted exercises help rebuild connections affected by stroke.</div>
+            </div>
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10}}>FREE EXERCISES</div>
+            {BRAIN_FREE.map(g=>(
+              <button key={g.id} onClick={()=>{
+                if(g.id==="memory")initMemory();
+                if(g.id==="wordrecall"){setWrPhase("study");setWrAnswers([]);setWrInput("");}
+                if(g.id==="pattern"){setPatSeq([]);setPatInput([]);setPatPhase("show");setPatLevel(3);}
+                if(g.id==="maths"){setMathQ(null);setMathScore(0);setMathTotal(0);setMathDone(false);}
+                if(g.id==="colour"){setCbnScene(0);setCbnPalette(CBN_PALETTE[0]);}
+                setGame(g.id);
+              }} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left"})}}>
+                <div style={{fontSize:30,flexShrink:0}}>{g.icon}</div>
+                <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700,color:NAVY}}>{g.name}</div><div style={{fontSize:11,color:"#5a6a7a",marginTop:2}}>{g.desc}</div></div>
+                <div style={{background:`${TEAL}15`,borderRadius:8,padding:"3px 8px",fontSize:9,color:TEAL,fontWeight:700}}>{g.diff}</div>
+              </button>
+            ))}
+            <div style={{fontSize:10,color:"#5a6a7a",letterSpacing:1.5,marginBottom:10,marginTop:6}}>PREMIUM EXERCISES ✦</div>
+            {BRAIN_PREMIUM.map(g=>(
+              <button key={g.id} onClick={()=>gate(()=>{
+                if(g.id==="stroop"){setStroopScore(0);setStroopTotal(0);setStroopDone(false);setStroopItem(null);}
+                if(g.id==="wordrecog")initWordRecog();
+                if(g.id==="numrecog")initNumRecog();
+                setGame(g.id);
+              })} style={{...card({width:"100%",marginBottom:10,padding:"14px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,textAlign:"left",opacity:premium?1:0.7})}}>
+                <div style={{fontSize:30,flexShrink:0}}>{g.icon}</div>
+                <div style={{flex:1}}><div style={{display:"flex",alignItems:"center",gap:6}}><div style={{fontSize:14,fontWeight:700,color:NAVY}}>{g.name}</div>{!premium&&<span style={{fontSize:9,color:GOLD,fontWeight:700}}>✦</span>}</div><div style={{fontSize:11,color:"#5a6a7a",marginTop:2}}>{g.desc}</div></div>
+                <div style={{background:`${WARM}15`,borderRadius:8,padding:"3px 8px",fontSize:9,color:WARM,fontWeight:700}}>{g.diff}</div>
+              </button>
+            ))}
+          </div>)}
+
+          {screen==="emergency"&&(<div>
+            <div style={{...card({background:"#dc2626",color:"#fff",textAlign:"center",marginBottom:16,padding:"18px"})}}>
+              <div style={{fontSize:22,marginBottom:6}}>Emergency Numbers</div>
+              <div style={{fontSize:13,opacity:0.9,lineHeight:1.5}}>If you suspect a stroke, call emergency services immediately. State: "I think someone is having a stroke."</div>
+            </div>
+            {EMERGENCY.map(e=>(
+              <div key={e.country} style={{...card({marginBottom:8,padding:"12px 14px",display:"flex",alignItems:"center",gap:12})}}>
+                <div style={{fontSize:24,flexShrink:0}}>{e.emoji}</div>
+                <div style={{flex:1}}><div style={{fontSize:13,fontWeight:700,color:NAVY}}>{e.country}</div><div style={{fontSize:16,fontWeight:900,color:"#dc2626",marginTop:1}}>{e.number}</div>{e.alt&&<div style={{fontSize:10,color:"#5a6a7a",marginTop:1}}>Also: {e.alt}</div>}</div>
+                <a href={`tel:${e.number.replace(/\s/g,"")}`} style={{background:"rgba(220,38,38,0.1)",border:"1px solid rgba(220,38,38,0.3)",borderRadius:10,padding:"6px 12px",color:"#dc2626",fontSize:11,fontWeight:700,textDecoration:"none",flexShrink:0}}>Call</a>
+              </div>
+            ))}
+          </div>)}
+        </div>
+
+        <div style={{position:"fixed",bottom:0,left:0,right:0,background:"rgba(248,244,239,0.97)",backdropFilter:"blur(16px)",borderTop:"1px solid rgba(30,58,95,0.09)",display:"flex",zIndex:50}}>
+          {NAV.map(tab=>(
+            <button key={tab.id} onClick={()=>setScreen(tab.id)} style={{flex:1,padding:"10px 0 14px",border:"none",background:"transparent",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
+              <span style={{fontSize:18}}>{tab.icon}</span>
+              <span style={{fontSize:9,color:screen===tab.id?TEAL:"#9aabb8",fontFamily:"Georgia,serif",fontWeight:screen===tab.id?700:400,letterSpacing:0.5}}>{tab.id==="fast"?"FAST":tab.id==="brain"?"Brain":tab.id.charAt(0).toUpperCase()+tab.id.slice(1)}</span>
+              {screen===tab.id&&<div style={{width:4,height:4,borderRadius:"50%",background:TEAL}}/>}
+            </button>
+          ))}
+        </div>
+
+        {modal&&(
+          <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"12px",zIndex:200}} onClick={()=>setModal(false)}>
+            <div style={{background:"linear-gradient(160deg,#fff,#f8f4ef)",borderRadius:26,padding:"24px 20px 28px",width:"100%",maxWidth:480,border:"1px solid rgba(30,58,95,0.1)",boxSizing:"border-box",height:"calc(100vh - 24px)",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+              <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:16,flexWrap:"wrap"}}>
+                {["🚫 No ads ever","🚫 No pop-ups","✓ Free 7-day trial","✓ Cancel anytime"].map(b=>(
+                  <div key={b} style={{background:`${TEAL}12`,border:`1px solid ${TEAL}30`,borderRadius:20,padding:"4px 10px",fontSize:10,color:TEAL,fontWeight:600}}>{b}</div>
+                ))}
+              </div>
+              <div style={{textAlign:"center",marginBottom:16}}>
+                <div style={{fontSize:30,marginBottom:6}}>✦</div>
+                <div style={{fontSize:22,fontWeight:700,color:NAVY}}>StrokeWise Premium</div>
+                <div style={{fontSize:13,color:"#5a6a7a",marginTop:4}}>The complete recovery companion</div>
+              </div>
+              {["Colour Word (Stroop) attention training","Word Recognition — language recovery","Number Recognition — numerical cognition","Category Sort — executive function","Visual Trail — processing speed","9 premium Colour by Number scenes (roses, birds, houses & more)","Downloadable recovery tracking sheets","Weekly expert stroke recovery newsletter","Medication & lifestyle interaction guide","Personalised recovery milestone tracker","Zero ads or pop-ups — ever"].map(f=>(
+                <div key={f} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:"1px solid rgba(30,58,95,0.06)"}}>
+                  <span style={{color:TEAL,fontSize:13}}>✓</span>
+                  <span style={{fontSize:13,color:"#3a4a5a"}}>{f}</span>
+                </div>
+              ))}
+              <div style={{display:"flex",gap:8,marginTop:18,marginBottom:10}}>
+                {[{label:"Monthly",price:"$7.99/mo",sub:"flexible"},{label:"Annual",price:"$44.99/yr",sub:"save 53%"}].map(pl=>{
+                  const sel=selPlan===pl.label;
+                  return(
+                    <button key={pl.label} onClick={()=>setSelPlan(pl.label)} style={{flex:1,background:sel?`${TEAL}20`:"rgba(30,58,95,0.05)",border:`2px solid ${sel?TEAL:"rgba(30,58,95,0.12)"}`,borderRadius:14,padding:"10px 6px",textAlign:"center",cursor:"pointer"}}>
+                      <div style={{fontSize:10,color:"#9aabb8",marginBottom:3}}>{pl.label}</div>
+                      <div style={{fontSize:14,fontWeight:700,color:NAVY}}>{pl.price}</div>
+                      <div style={{fontSize:9,color:sel?TEAL:"#9aabb8",marginTop:2}}>{pl.sub}</div>
+                    </button>
+                  );
+                })}
+              </div>
+              <button onClick={()=>alert("Premium payments are coming very soon! Thank you for your interest — the free version has everything you need to get started.")} style={{width:"100%",background:`linear-gradient(135deg,${WARM},${GOLD})`,border:"none",borderRadius:16,padding:"14px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",marginBottom:10}}>Start Free 7-Day Trial</button>
+              <button onClick={()=>setModal(false)} style={{width:"100%",background:"rgba(30,58,95,0.05)",border:"1px solid rgba(30,58,95,0.08)",borderRadius:16,padding:"11px",color:"#5a6a7a",fontSize:13,cursor:"pointer"}}>Maybe later</button>
+              <div style={{textAlign:"center",marginTop:12,fontSize:11,color:"#9aabb8",lineHeight:1.7}}>🚫 No ads or pop-ups — not now, not ever<br/>✓ Free for 7 days — cancel anytime before being charged</div>
+            </div>
+          </div>
+        )}
+      </>)}
     </div>
   );
 }
